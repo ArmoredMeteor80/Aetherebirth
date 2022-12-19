@@ -12,7 +12,7 @@ class Game:
 
     def run(self):
         """Boucle du jeu"""
-        # Création d'un objet "Clock" permettant de gérer le temps en tant
+        # Création d'un objet "Clock" permettant de gérer le temps
         clock = pygame.time.Clock()
         running = True
 
