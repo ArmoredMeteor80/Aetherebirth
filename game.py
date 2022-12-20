@@ -13,7 +13,7 @@ class Game:
         pygame.display.set_caption("Pyb0b")
 
         # Charge la carte tmx en créant un objet "TiledMap" contenant les calques, objets et images d'une carte .tmx
-        tmx_data = pytmx.util_pygame.load_pygame("carte.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("assets/maps/test_map.tmx")
         # On récupère les données du fichier .tmx dans map_data
         map_data = pyscroll.data.TiledMapData(tmx_data)
         # On charge les calques du fichier .tmx
