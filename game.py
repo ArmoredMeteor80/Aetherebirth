@@ -1,6 +1,7 @@
 import pygame
 import pytmx
 import pyscroll
+from player import Player
 
 
 class Game:
@@ -18,9 +19,47 @@ class Game:
         map_data = pyscroll.data.TiledMapData(tmx_data)
         # On charge les calques du fichier .tmx
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
+        map_layer.zoom = 2
+
+        # Génération d'un joueur
+        player_position = tmx_data.get_object_by_name("player")
+        self.player = Player(player_position.x, player_position.y)
 
         # Dessiner le groupe de calques en créant un objet "PyscrollGroup"
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=1)
+        self.group.add(self.player)
+
+    def handle_imput(self):
+        """Permet la gestion de toutes les entrées"""
+        # Récupération des touches actionnées
+        pressed = pygame.key.get_pressed()
+
+        if pressed[pygame.K_s] and pressed[pygame.K_d] or pressed[pygame.K_DOWN] and pressed[pygame.K_RIGHT]:
+            self.player.move_right_down()
+        elif pressed[pygame.K_s] and pressed[pygame.K_q] or pressed[pygame.K_DOWN] and pressed[pygame.K_LEFT]:
+            self.player.move_left_down()
+        elif pressed[pygame.K_z] and pressed[pygame.K_d] or pressed[pygame.K_UP] and pressed[pygame.K_RIGHT]:
+            self.player.move_right_up()
+        elif pressed[pygame.K_z] and pressed[pygame.K_q] or pressed[pygame.K_UP] and pressed[pygame.K_LEFT]:
+            self.player.move_left_up()
+        elif pressed[pygame.K_s] or pressed[pygame.K_DOWN]:
+            self.player.move_down()
+            self.player.change_animation('down')
+        elif pressed[pygame.K_q] or pressed[pygame.K_LEFT]:
+            self.player.move_left()
+            self.player.change_animation('left')
+        elif pressed[pygame.K_d] or pressed[pygame.K_RIGHT]:
+            self.player.move_right()
+            self.player.change_animation('right')
+        elif pressed[pygame.K_z] or pressed[pygame.K_UP]:
+            self.player.move_up()
+            self.player.change_animation('up')
+        if pressed[pygame.K_LSHIFT]:
+            self.player.speed = 3.5
+        else:
+            self.player.speed = 2
+
+
 
     def run(self):
         """Boucle du jeu"""
@@ -30,6 +69,12 @@ class Game:
 
         while running:
 
+            # On gère toutes les entrées
+            self.handle_imput()
+            # Actualisation du groupe
+            self.group.update()
+            # On centre la caméra sur le joueur
+            self.group.center(self.player.rect.center)
             # Affichage des calques sur la fenêtre d'affichage
             self.group.draw(self.screen)
             # Actualisation de la fenêtre
