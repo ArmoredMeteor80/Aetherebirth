@@ -20,7 +20,13 @@ class Player(pygame.sprite.Sprite):
             "right": self.get_image(0, 80),
             "up": self.get_image(0, 120)
         }
+        self.feet = pygame.Rect(0, 0, self.rect.width*0.5, 8)
+        self.old_position = self.position.copy()
         self.speed = 2
+
+    def save_location(self):
+        """mémorise la position du joueur"""
+        self.old_position = self.position.copy()
 
     def change_animation(self, name):
         """Change l'animation en fonction d'un nom d'animation"""
@@ -66,6 +72,13 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         """Met à jour la position du joueur"""
         self.rect.topleft = self.position
+        self.feet.midbottom = self.rect.midbottom
+
+    def move_back(self):
+        """Replace le joueur à la position antérieure à une collision"""
+        self.position = self.old_position
+        self.rect.topleft = self.position
+        self.feet.midbottom = self.rect.midbottom
 
     def get_image(self, x, y):
         """Renvoie les coordonnées x, y du sprite sheet du joueur """

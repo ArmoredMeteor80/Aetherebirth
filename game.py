@@ -25,8 +25,15 @@ class Game:
         player_position = tmx_data.get_object_by_name("player")
         self.player = Player(player_position.x, player_position.y)
 
+        # Définition d'une liste stockant les boites de collision
+        self.collision = []
+        # On récupère tous les objets de la carte
+        for obj in tmx_data.objects:
+            if obj.name == "collision":
+                self.collision.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+
         # Dessiner le groupe de calques en créant un objet "PyscrollGroup"
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=1)
+        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
         self.group.add(self.player)
 
     def handle_imput(self):
@@ -59,7 +66,14 @@ class Game:
         else:
             self.player.speed = 2
 
+    def update(self):
+        """Actualise le groupe"""
+        self.group.update()
 
+        # Vérification des collisions
+        for sprite in self.group.sprites():
+            if sprite.feet.collidelist(self.collision) > -1:
+                sprite.move_back()
 
     def run(self):
         """Boucle du jeu"""
@@ -69,10 +83,12 @@ class Game:
 
         while running:
 
+            # On mémorise la position du joueur
+            self.player.save_location()
             # On gère toutes les entrées
             self.handle_imput()
             # Actualisation du groupe
-            self.group.update()
+            self.update()
             # On centre la caméra sur le joueur
             self.group.center(self.player.rect.center)
             # Affichage des calques sur la fenêtre d'affichage
