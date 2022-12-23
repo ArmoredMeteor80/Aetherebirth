@@ -8,7 +8,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         """Constructeur qui initialise la Classe 'Sprite'"""
         super().__init__()
-        self.sprite_sheet = pygame.image.load("assets/sprites/player/sprite_sheet_lutin_1.png")
+        self.sprite_sheet = pygame.image.load("assets/sprites/player/sprite_sheet_lutin_1.png").convert_alpha()
         self.image = self.get_image(0, 0)
         # enlève le noir du sprite au profit du transparent
         self.image.set_colorkey([0, 0, 0])
@@ -83,7 +83,7 @@ class Player(pygame.sprite.Sprite):
     def get_image(self, x, y):
         """Renvoie les coordonnées x, y du sprite sheet du joueur """
         # Création d'une surface de 32 par 40 pixels
-        image = pygame.Surface([32, 40])
+        image = pygame.Surface([32, 40], pygame.SRCALPHA)
         # On récupère uniquement le premier sprite du sprite sheet
         image.blit(self.sprite_sheet, (0, 0), (x, y, 32, 40))
         return image

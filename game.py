@@ -18,8 +18,8 @@ class Game:
         # On récupère les données du fichier .tmx dans map_data
         map_data = pyscroll.data.TiledMapData(tmx_data)
         # On charge les calques du fichier .tmx
-        map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
-        map_layer.zoom = 2
+        map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size(), alpha=True)
+        map_layer.zoom = 3
 
         # Génération d'un joueur
         player_position = tmx_data.get_object_by_name("player")
