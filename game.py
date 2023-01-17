@@ -33,7 +33,7 @@ class Game:
                 self.collision.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
         # Dessiner le groupe de calques en créant un objet "PyscrollGroup"
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
+        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
         self.group.add(self.player)
 
     def handle_imput(self):
