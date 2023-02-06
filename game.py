@@ -1,6 +1,8 @@
 import pygame
 import pytmx
 import pyscroll
+
+from map import MapManager
 from player import Player
 
 
@@ -8,33 +10,14 @@ class Game:
     """Représentation du concept du jeu"""
     def __init__(self):
         """Constructeur"""
-        # Création de la fenêtre de
+        # Création de la fenêtre de jeu
         self.screen = pygame.display.set_mode((1280, 720))
         # Change le titre de la fenêtre
         pygame.display.set_caption("Pyb0b")
 
-        # Charge la carte tmx en créant un objet "TiledMap" contenant les calques, objets et images d'une carte .tmx
-        tmx_data = pytmx.util_pygame.load_pygame("assets/maps/test_map.tmx")
-        # On récupère les données du fichier .tmx dans map_data
-        map_data = pyscroll.data.TiledMapData(tmx_data)
-        # On charge les calques du fichier .tmx
-        map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size(), alpha=True)
-        map_layer.zoom = 3
-
         # Génération d'un joueur
-        player_position = tmx_data.get_object_by_name("player")
-        self.player = Player(player_position.x, player_position.y)
-
-        # Définition d'une liste stockant les boites de collision
-        self.collision = []
-        # On récupère tous les objets de la carte
-        for obj in tmx_data.objects:
-            if obj.name == "collision":
-                self.collision.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
-
-        # Dessiner le groupe de calques en créant un objet "PyscrollGroup"
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
-        self.group.add(self.player)
+        self.player = Player(0, 0)
+        self.map_manager = MapManager(self.screen, self.player)
 
     def handle_imput(self):
         """Permet la gestion de toutes les entrées"""
@@ -68,12 +51,7 @@ class Game:
 
     def update(self):
         """Actualise le groupe"""
-        self.group.update()
-
-        # Vérification des collisions
-        for sprite in self.group.sprites():
-            if sprite.feet.collidelist(self.collision) > -1:
-                sprite.move_back()
+        self.map_manager.update()
 
     def run(self):
         """Boucle du jeu"""
@@ -89,10 +67,8 @@ class Game:
             self.handle_imput()
             # Actualisation du groupe
             self.update()
-            # On centre la caméra sur le joueur
-            self.group.center(self.player.rect.center)
-            # Affichage des calques sur la fenêtre d'affichage
-            self.group.draw(self.screen)
+            # On centre la caméra sur le joueur et affichage des calques sur la fenêtre d'affichage
+            self.map_manager.draw()
             # Actualisation de la fenêtre
             pygame.display.flip()
 
