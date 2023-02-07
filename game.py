@@ -8,10 +8,10 @@ from player import Player
 
 class Game:
     """Représentation du concept du jeu"""
-    def __init__(self):
+    def __init__(self, width, height):
         """Constructeur"""
         # Création de la fenêtre de jeu
-        self.screen = pygame.display.set_mode((1280, 720))
+        self.screen = pygame.display.set_mode((width, height))
         # Change le titre de la fenêtre
         pygame.display.set_caption("Pyb0b")
 
@@ -45,7 +45,7 @@ class Game:
             self.player.move_up()
             self.player.change_animation('up')
         if pressed[pygame.K_LSHIFT]:
-            self.player.speed = 3.5
+            self.player.speed = 3
         else:
             self.player.speed = 2
 

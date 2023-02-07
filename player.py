@@ -51,23 +51,23 @@ class Player(pygame.sprite.Sprite):
 
     def move_right_down(self):
         """Déplace le joueur en bas à droite"""
-        self.position[0] += self.speed/1.25
-        self.position[1] += self.speed/1.25
+        self.position[0] += self.speed
+        self.position[1] += self.speed
 
     def move_left_down(self):
         """Déplace le joueur en bas à gauche"""
-        self.position[0] -= self.speed/1.25
-        self.position[1] += self.speed/1.25
+        self.position[0] -= self.speed
+        self.position[1] += self.speed
 
     def move_right_up(self):
         """Déplace le joueur en haut à droite"""
-        self.position[0] += self.speed/1.25
-        self.position[1] -= self.speed/1.25
+        self.position[0] += self.speed
+        self.position[1] -= self.speed
 
     def move_left_up(self):
         """Déplace le joueur en haut à gauche"""
-        self.position[0] -= self.speed/1.25
-        self.position[1] -= self.speed/1.25
+        self.position[0] -= self.speed
+        self.position[1] -= self.speed
 
     def update(self):
         """Met à jour la position du joueur"""
