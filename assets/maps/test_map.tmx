@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="76">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="119">
  <tileset firstgid="1" source="tiled_ressources/tilesets/grass.tsx"/>
  <tileset firstgid="65" source="tiled_ressources/tilesets/props.tsx"/>
  <tileset firstgid="321" source="tiled_ressources/tilesets/shadow.tsx"/>
@@ -77,11 +77,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,954,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,930,0,0,0,0,0,0,0,0,0,0,37,38,39,37,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,930,0,0,0,0,56,40,38,34,42,33,34,41,42,33,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,54,41,47,45,53,0,35,41,34,41,49,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,52,0,54,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,54,41,57,45,53,0,35,41,34,41,49,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,41,33,0,0,0,0,43,49,53,54,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,43,57,0,0,0,0,61,60,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,51,62,61,42,50,49,58,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,45,53,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -368,7 +368,7 @@
   <object id="54" name="collision" x="1264" y="0">
    <polygon points="0,0 -0.0434783,43.8261 8.91304,48.9565 90.8182,49 96.7273,45.7273 96.9091,0"/>
   </object>
-  <object id="56" name="collision" x="834.938" y="398.063" width="57.1875" height="41.875"/>
+  <object id="56" name="collision" x="849.5" y="398" width="23.4375" height="15.875"/>
   <object id="58" name="collision" x="1102.56" y="233.838" width="129.056" height="103.528"/>
   <object id="65" name="collision" x="1071.47" y="201.361" width="64.556" height="71.7784"/>
   <object id="67" name="collision" x="1199.47" y="137.986" width="96.806" height="135.528"/>
@@ -378,5 +378,31 @@
   <object id="75" name="spawn_test" x="832" y="322.5">
    <point/>
   </object>
+  <object id="99" name="collision" x="840.98" y="410.028" width="7.85791" height="4.67045"/>
+  <object id="100" name="collision" x="851.02" y="431.028" width="13.7275" height="2.03804"/>
+  <object id="101" name="collision" x="835.253" y="414.847" width="21.5852" height="16.125"/>
+  <object id="103" name="collision" x="847.043" y="400.028" width="2.33691" height="3.10919"/>
+  <object id="104" name="collision" x="871.531" y="406" width="6.48438" height="3.875"/>
+  <object id="105" name="collision" x="844.75" y="403.057" width="2.24996" height="6.82386"/>
+  <object id="106" name="collision" x="841.929" y="407.021" width="2.69996" height="2.94886"/>
+  <object id="107" name="collision" x="837.96" y="411.814" width="3.01246" height="2.94886"/>
+  <object id="108" name="collision" x="857.006" y="433.155" width="11.7275" height="1.82065"/>
+  <object id="109" name="collision" x="865.006" y="434.22" width="11.7275" height="1.82065"/>
+  <object id="110" name="collision" x="869.093" y="436.046" width="11.7275" height="3.82065"/>
+  <object id="111" name="collision" x="880.788" y="434.177" width="4.24924" height="3.82065"/>
+  <object id="112" name="collision" x="883.701" y="426.133" width="4.24924" height="9.77717"/>
+  <object id="114" name="collision" x="886.701" y="413.961" width="4.24924" height="12.0584"/>
+  <object id="115" name="collision" x="878.068" y="407.037" width="2.07533" height="2.99456"/>
+  <object id="116" name="collision" x="880.023" y="408.96" width="4.942" height="2.99456"/>
+  <object id="117" name="collision" x="885.029" y="410.034" width="1.91075" height="2.99456"/>
+  <object id="118" name="collision" x="887.013" y="412.096" width="1.91075" height="2.99456"/>
+ </objectgroup>
+ <objectgroup id="12" name="NPCPaths">
+  <object id="77" name="lutin_path1" x="736" y="376" width="16" height="16"/>
+  <object id="91" name="lutin_path2" x="736" y="496" width="16" height="16"/>
+  <object id="92" name="lutin_path3" x="944" y="496" width="16" height="16"/>
+  <object id="93" name="lutin_path4" x="944" y="312" width="16" height="16"/>
+  <object id="95" name="lutin_path5" x="896" y="312" width="16" height="16"/>
+  <object id="96" name="lutin_path6" x="896" y="376" width="16" height="16"/>
  </objectgroup>
 </map>

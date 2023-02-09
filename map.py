@@ -4,7 +4,7 @@ import pytmx
 import pyscroll
 
 import game
-from player import Player
+from player import Player, NPC
 
 
 @dataclass
@@ -24,6 +24,7 @@ class Map:
     group: pyscroll.PyscrollGroup
     tmx_data: pytmx.TiledMap
     portals: list[Portal]
+    npcs: list[NPC]
 
 
 class MapManager:
@@ -38,12 +39,15 @@ class MapManager:
         # Chargement des cartes
         self.register_map("test_map", portals=[
             Portal(from_world="test_map", origin_point="enter_clairiere", target_world="clairiere_map", teleport_point="spawn_clairiere")
+        ], npcs=[
+            NPC("lutin", nb_points=6)
         ])
         self.register_map("clairiere_map", portals=[
             Portal(from_world="clairiere_map", origin_point="enter_test", target_world="test_map", teleport_point="spawn_test")
         ])
 
         self.teleport_player("player")
+        self.teleport_npcs()
 
     def check_collisions(self):
         """Détecte les collisions"""
@@ -71,7 +75,7 @@ class MapManager:
         # Surface qui va faire le fondu en augmentant et baissant sa valeur d'alpha
         fade = pygame.Surface(self.screen.get_size()).convert_alpha()
         fade.fill((49, 26, 18))
-        for alpha in range(0, 256, 2):
+        for alpha in range(0, 256, 5):
             self.screen.blit(screen_image, (0, 0))
             fade.set_alpha(alpha)
             self.screen.blit(fade, (0, 0))
@@ -87,7 +91,7 @@ class MapManager:
         self.screen.set_clip(fade_rect)
         screen_image = self.screen.copy()
         self.screen.set_clip(None)
-        for alpha in range(255, -1, -2):
+        for alpha in range(255, -1, -5):
             self.screen.blit(screen_image, (0, 0))
             fade.set_alpha(alpha)
             self.screen.blit(fade, (0, 0))
@@ -100,7 +104,7 @@ class MapManager:
         self.player.position[1] = point.y
         self.player.save_location()
 
-    def register_map(self, name, portals=[]):
+    def register_map(self, name, portals=[], npcs=[]):
         """Charge les différentes cartes"""
         # Charge la carte tmx en créant un objet "TiledMap" contenant les calques, objets et images d'une carte .tmx
         tmx_data = pytmx.util_pygame.load_pygame(f"assets/maps/{name}.tmx")
@@ -121,8 +125,12 @@ class MapManager:
         group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
         group.add(self.player)
 
+        # On récupère tous les PNJ pour les ajouter au groupe
+        for npc in npcs:
+            group.add(npc)
+
         # Création d'un objet Map qu'on injecte dans le dictionnaire les repertoriant
-        self.maps[name] = Map(name, collision, group, tmx_data, portals)
+        self.maps[name] = Map(name, collision, group, tmx_data, portals, npcs)
 
     # Accesseurs (getters)
     def get_map(self):
@@ -141,6 +149,16 @@ class MapManager:
         """Renvoie l'objet demandé"""
         return self.get_map().tmx_data.get_object_by_name(name)
 
+    def teleport_npcs(self):
+        """Teleporte les PNJ"""
+        for map in self.maps:
+            map_data = self.maps[map]
+            npcs = map_data.npcs
+
+            for npc in npcs:
+                npc.load_points(map_data.tmx_data)
+                npc.teleport_spawn()
+
     # Mutateurs (setters)
     def draw(self):
         """Dessine la carte"""
@@ -151,3 +169,6 @@ class MapManager:
         """Actualise le groupe"""
         self.get_group().update()
         self.check_collisions()
+
+        for npc in self.get_map().npcs:
+            npc.move()
