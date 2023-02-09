@@ -61,26 +61,31 @@ class MapManager:
                     copy_portal = portal
                     self.current_map = portal.target_world
                     self.teleport_player(copy_portal.teleport_point)
-                    self.fade()
+                    self.fade_in((49, 26, 18), 5)
+                    self.fade_out((49, 26, 18), 5)
 
         # Support des collisions
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_collision()) > -1:
                 sprite.move_back()
 
-    def fade(self):
+    def fade_in(self, color, speed):
         """Filtre de fondu"""
         # on fait une copie de l'écran
         screen_image = self.screen.copy()
         # Surface qui va faire le fondu en augmentant et baissant sa valeur d'alpha
         fade = pygame.Surface(self.screen.get_size()).convert_alpha()
-        fade.fill((49, 26, 18))
-        for alpha in range(0, 256, 5):
+        fade.fill(color)
+        for alpha in range(0, 256, speed):
             self.screen.blit(screen_image, (0, 0))
             fade.set_alpha(alpha)
             self.screen.blit(fade, (0, 0))
             pygame.display.update()
 
+    def fade_out(self, color, speed):
+        """Filtre de fondu inverse"""
+        fade = pygame.Surface(self.screen.get_size()).convert_alpha()
+        fade.fill(color)
         # Fondu inverse, on met d'abord à jour le joueur qui se met sur la nouvelle carte chargée,
         # puis on draw deux fois de sorte à afficher la carte derrière le fondu et centrer la caméra sur le joueur
         self.player.update()
@@ -91,7 +96,7 @@ class MapManager:
         self.screen.set_clip(fade_rect)
         screen_image = self.screen.copy()
         self.screen.set_clip(None)
-        for alpha in range(255, -1, -5):
+        for alpha in range(255, -1, -speed):
             self.screen.blit(screen_image, (0, 0))
             fade.set_alpha(alpha)
             self.screen.blit(fade, (0, 0))

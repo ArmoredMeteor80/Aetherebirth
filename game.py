@@ -53,15 +53,7 @@ class Game:
         # On rend visible la fenêtre de jeu
         pygame.display.set_mode(self.screen.get_size(), pygame.SCALED | pygame.SHOWN, vsync=1)
         self.map_manager.draw()
-        screen_image = self.screen.copy()
-        # Surface qui va faire le fondu en augmentant et baissant sa valeur d'alpha
-        fade = pygame.Surface(self.screen.get_size()).convert_alpha()
-        fade.fill((255, 255, 255))
-        for alpha in range(255, -1, -3):
-            self.screen.blit(screen_image, (0, 0))
-            fade.set_alpha(alpha)
-            self.screen.blit(fade, (0, 0))
-            pygame.display.update()
+        self.map_manager.fade_out((255, 255, 255), 5)
 
     def run(self):
         """Boucle du jeu"""
@@ -86,6 +78,7 @@ class Game:
             for event in pygame.event.get():
                 # Stoppe la boucle de jeu lorsque la fenêtre est fermée
                 if event.type == pygame.QUIT:
+                    self.map_manager.fade_in((0, 0, 0), 2)
                     running = False
 
             # Animation de démarrage
