@@ -8,6 +8,7 @@ from player import Player
 
 class Game:
     """Représentation du concept du jeu"""
+
     def __init__(self, size):
         """Constructeur"""
         # Création de la fenêtre de jeu
@@ -22,7 +23,6 @@ class Game:
         """Permet la gestion de toutes les entrées"""
         # Récupération des touches actionnées
         pressed = pygame.key.get_pressed()
-
         if pressed[pygame.K_s] and pressed[pygame.K_d] or pressed[pygame.K_DOWN] and pressed[pygame.K_RIGHT]:
             self.player.move_right_down()
         elif pressed[pygame.K_s] and pressed[pygame.K_q] or pressed[pygame.K_DOWN] and pressed[pygame.K_LEFT]:
@@ -39,10 +39,16 @@ class Game:
             self.player.move_right()
         elif pressed[pygame.K_z] or pressed[pygame.K_UP]:
             self.player.move_up()
+        if self.player.old_position[0] - self.player.position[0] == 0 \
+                and self.player.old_position[1] - self.player.position[1] == 0:
+            self.player.change_animation('still')
         if pressed[pygame.K_LSHIFT]:
+            self.player.is_running = True
             self.player.speed = 3
         else:
+            self.player.is_running = False
             self.player.speed = 2
+
 
     def update(self):
         """Actualise le groupe"""

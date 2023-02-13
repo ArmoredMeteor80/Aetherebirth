@@ -1,76 +1,78 @@
 import pygame
 import random
 
+from animation import AnimateSprite
+
 
 # La classe "Player" hérite de la classe parente "Sprite" de pygame.sprite
-class Entity(pygame.sprite.Sprite):
+class Entity(AnimateSprite):
     """Classe d'une entité"""
 
     def __init__(self, name, x, y):
         """Constructeur qui initialise la Classe 'Sprite'"""
-        super().__init__()
-        self.sprite_sheet = pygame.image.load(f"assets/sprites/sprite_sheet_{name}.png").convert_alpha()
-        self.image = self.get_image(0, 0)
+        super().__init__(name)
+        self.image = self.get_image(32, 0)
         # enlève le noir du sprite au profit du transparent
         self.image.set_colorkey([0, 0, 0])
         self.rect = self.image.get_rect()
         self.position = [x, y]
-        self.images = {
-            "down": self.get_image(0, 0),
-            "left": self.get_image(0, 96),
-            "right": self.get_image(0, 64),
-            "up": self.get_image(0, 32)
-        }
         self.feet = pygame.Rect(0, 0, self.rect.width*0.5, 8)
         self.old_position = self.position.copy()
-        self.speed = 2
+        self.is_running = False
 
     def save_location(self):
         """mémorise la position du joueur"""
         self.old_position = self.position.copy()
 
-    def change_animation(self, name):
-        """Change l'animation en fonction d'un nom d'animation"""
-        self.image = self.images[name]
-        self.image.set_colorkey((0, 0, 0))
-
     def move_right(self):
         """Déplace le joueur à droite"""
-        self.change_animation('right')
+        animation = 'sprint_right' if self.is_running else 'right'
+        self.change_animation(f"{animation}")
         self.position[0] += self.speed
 
     def move_left(self):
         """Déplace le joueur à gauche"""
-        self.change_animation('left')
+        animation = 'sprint_left' if self.is_running else 'left'
+        self.change_animation(f"{animation}")
         self.position[0] -= self.speed
 
     def move_up(self):
         """Déplace le joueur en haut"""
-        self.change_animation('up')
+        animation = 'sprint_up' if self.is_running else 'up'
+        self.change_animation(f"{animation}")
         self.position[1] -= self.speed
 
     def move_down(self):
         """Déplace le joueur en bas"""
-        self.change_animation('down')
+        animation = 'sprint_down' if self.is_running else 'down'
+        self.change_animation(f"{animation}")
         self.position[1] += self.speed
 
     def move_right_down(self):
         """Déplace le joueur en bas à droite"""
+        animation = 'sprint_right' if self.is_running else 'right'
+        self.change_animation(f"{animation}")
         self.position[0] += self.speed-1
         self.position[1] += self.speed-1
 
     def move_left_down(self):
         """Déplace le joueur en bas à gauche"""
+        animation = 'sprint_left' if self.is_running else 'left'
+        self.change_animation(f"{animation}")
         self.position[0] -= self.speed-1
         self.position[1] += self.speed-1
 
     def move_right_up(self):
         """Déplace le joueur en haut à droite"""
+        animation = 'sprint_up' if self.is_running else 'up'
+        self.change_animation(f"{animation}")
         self.position[0] += self.speed-1
         self.position[1] -= self.speed-1
 
     def move_left_up(self):
         """Déplace le joueur en haut à gauche"""
+        animation = 'sprint_up' if self.is_running else 'up'
+        self.change_animation(f"{animation}")
         self.position[0] -= self.speed-1
         self.position[1] -= self.speed-1
 
@@ -84,14 +86,6 @@ class Entity(pygame.sprite.Sprite):
         self.position = self.old_position
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
-
-    def get_image(self, x, y):
-        """Renvoie les coordonnées x, y du sprite sheet du joueur """
-        # Création d'une surface de 32 par 40 pixels
-        image = pygame.Surface([32, 32], pygame.SRCALPHA)
-        # On récupère uniquement le premier sprite du sprite sheet
-        image.blit(self.sprite_sheet, (0, 0), (x, y, 32, 32))
-        return image
 
 
 class Player(Entity):

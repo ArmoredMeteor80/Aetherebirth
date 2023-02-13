@@ -66,6 +66,13 @@ class MapManager:
 
         # Support des collisions
         for sprite in self.get_group().sprites():
+
+            if type(sprite) is NPC:
+                if sprite.feet.colliderect(self.player.feet):
+                    sprite.speed = 0
+                    self.player.move_back()
+                else:
+                    sprite.speed = 1
             if sprite.feet.collidelist(self.get_collision()) > -1:
                 sprite.move_back()
 
@@ -164,7 +171,6 @@ class MapManager:
                 npc.load_points(map_data.tmx_data)
                 npc.teleport_spawn()
 
-    # Mutateurs (setters)
     def draw(self):
         """Dessine la carte"""
         self.get_group().draw(self.screen)
