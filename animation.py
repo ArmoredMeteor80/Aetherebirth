@@ -19,7 +19,8 @@ class AnimateSprite(pygame.sprite.Sprite):
                 "sprint_down": (self.get_images(0, 6, 9), 0),
                 "sprint_up": (self.get_images(32, 6, 9), 1),
                 "sprint_right": (self.get_images(64, 6, 9), 2),
-                "sprint_left": (self.get_images(96, 6, 9), 3)
+                "sprint_left": (self.get_images(96, 6, 9), 3),
+                "attack": (self.get_images(128, 0, 11), 0)
             }
         else:
             self.images = {
@@ -30,26 +31,40 @@ class AnimateSprite(pygame.sprite.Sprite):
                 "still": (self.get_images(0, 0, 1), 0)
             }
         self.animation_index = 0
+        self.attack_animation_index = 0
         self.clock = 0
+        self.attack_clock = 0
         self.speed = 1
 
     def change_animation(self, name):
         """Change l'animation en fonction d'un nom d'animation"""
-        if name == 'still' and self.animation_index == 1:
-            self.speed = random.randint(1, 10)/50
+        if name == 'attack':
+            if self.attack_animation_index >= len(self.images[name][0]):
+                self.attack_animation_index = 0
+            self.image = self.images[name][0][self.attack_animation_index]
+            self.attack_clock += 20
+            if self.attack_clock >= 100:
+                # On passe à l'image suivante
+                self.attack_animation_index += 1
+                self.attack_clock = 0
+        else:
+            if name == 'still' and self.animation_index == 1:
+                self.speed = random.randint(1, 10)/50
+                self.attack_animation_index = 0
 
-        if self.animation_index >= len(self.images[name][0]):
-            self.animation_index = 0
-        self.image = self.images[name][0][self.animation_index]
-        self.clock += self.speed * 6
+            if self.animation_index >= len(self.images[name][0]):
+                self.animation_index = 0
+            self.image = self.images[name][0][self.animation_index]
+            self.clock += self.speed * 6
 
-        # On cadence l'animation
-        if self.clock >= 100:
-            # On passe à l'image suivante
-            self.animation_index += 1
-            self.clock = 0
-        if name != "still":
-            self.images['still'] = (self.get_images(self.images[name][1] * 32, 0, 1), 0)
+            # On cadence l'animation
+            if self.clock >= 100:
+                # On passe à l'image suivante
+                self.animation_index += 1
+                self.clock = 0
+            if name != 'still':
+                self.images['still'] = (self.get_images(self.images[name][1] * 32, 0, 1), 0)
+                self.images['attack'] = (self.get_images(self.images[name][1]*32 + 128, 0, 11), 0)
 
     def get_images(self, y, start, end):
         """Renvoie une liste d'images"""

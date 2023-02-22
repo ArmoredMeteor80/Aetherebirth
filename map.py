@@ -39,9 +39,9 @@ class MapManager:
         # Chargement des cartes
         self.register_map("test_map", portals=[
             Portal(from_world="test_map", origin_point="enter_clairiere", target_world="clairiere_map", teleport_point="spawn_clairiere")
-        ], npcs=[
-            NPC("lutin", nb_points=6)
-        ])
+        ], npcs=[NPC('lutin', 6)]
+
+        )
         self.register_map("clairiere_map", portals=[
             Portal(from_world="clairiere_map", origin_point="enter_test", target_world="test_map", teleport_point="spawn_test")
         ])
@@ -68,7 +68,7 @@ class MapManager:
         for sprite in self.get_group().sprites():
 
             if type(sprite) is NPC:
-                if sprite.feet.colliderect(self.player.feet):
+                if sprite.rect.colliderect(self.player.feet):
                     sprite.speed = 0
                     self.player.move_back()
                 else:

@@ -39,7 +39,9 @@ class Game:
             self.player.move_right()
         elif pressed[pygame.K_z] or pressed[pygame.K_UP]:
             self.player.move_up()
-        if self.player.old_position[0] - self.player.position[0] == 0 \
+        if pressed[pygame.K_a]:
+            self.player.attack()
+        elif self.player.old_position[0] - self.player.position[0] == 0 \
                 and self.player.old_position[1] - self.player.position[1] == 0:
             self.player.change_animation('still')
         if pressed[pygame.K_LSHIFT]:
@@ -48,7 +50,6 @@ class Game:
         else:
             self.player.is_running = False
             self.player.speed = 2
-
 
     def update(self):
         """Actualise le groupe"""
@@ -86,6 +87,8 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.map_manager.fade_in((0, 0, 0), 2)
                     running = False
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    self.player.attack()
 
             # Animation de démarrage
             if not is_booted:

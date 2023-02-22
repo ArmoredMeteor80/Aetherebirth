@@ -76,6 +76,10 @@ class Entity(AnimateSprite):
         self.position[0] -= self.speed-1
         self.position[1] -= self.speed-1
 
+    def attack(self):
+        """Déclenche une attaque"""
+        self.change_animation("attack")
+
     def update(self):
         """Met à jour la position du joueur"""
         self.rect.topleft = self.position
