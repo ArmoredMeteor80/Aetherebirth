@@ -30,21 +30,27 @@ class Map:
 class MapManager:
     """Gère la dynamique de carte"""
     def __init__(self, screen, player):
-        # stockage des cartes dans un dictionnaire sous forme "test" -> Map("test", walls, group)
+        # stockage des cartes dans un dictionnaire sous forme "castle" -> Map("castle", walls, group)
         self.maps = dict()
         self.screen = screen
         self.player = player
-        self.current_map = "test_map"
+        self.current_map = "clairiere_map"
 
         # Chargement des cartes
-        self.register_map("test_map", portals=[
-            Portal(from_world="test_map", origin_point="enter_clairiere", target_world="clairiere_map", teleport_point="spawn_clairiere")
-        ], npcs=[NPC('lutin', 6)]
-
-        )
         self.register_map("clairiere_map", portals=[
-            Portal(from_world="clairiere_map", origin_point="enter_test", target_world="test_map", teleport_point="spawn_test")
-        ])
+            Portal(from_world="clairiere_map", origin_point="enter_castle", target_world="castle_map",
+                   teleport_point="spawn_castle"),
+            Portal(from_world="clairiere_map", origin_point="enter_test", target_world="test_map",
+                   teleport_point="spawn_test")])
+
+        self.register_map("castle_map", portals=[
+            Portal(from_world="castle_map", origin_point="enter_clairiere", target_world="clairiere_map",
+                   teleport_point="spawn_clairiere1")
+        ], npcs=[NPC('lutin', 6)])
+
+        self.register_map("test_map", portals=[
+            Portal(from_world="test_map", origin_point="enter_clairiere", target_world="clairiere_map",
+                   teleport_point="spawn_clairiere2")])
 
         self.teleport_player("player")
         self.teleport_npcs()
