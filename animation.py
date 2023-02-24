@@ -34,6 +34,8 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.attack_animation_index = 0
         self.clock = 0
         self.attack_clock = 0
+        # Horloge permettant de cadencer le temps durant lequel on peut continuer un combo
+        self.attack_clock_combo_extender = 0
         self.speed = 1
 
     def change_animation(self, name):
@@ -47,10 +49,15 @@ class AnimateSprite(pygame.sprite.Sprite):
                 # On passe à l'image suivante
                 self.attack_animation_index += 1
                 self.attack_clock = 0
+                self.attack_clock_combo_extender = 0
         else:
+            self.attack_clock_combo_extender += 1
+            if self.attack_clock_combo_extender >= 40:
+                self.attack_animation_index = 0
+                self.attack_clock_combo_extender = 0
+
             if name == 'still' and self.animation_index == 1:
                 self.speed = random.randint(1, 10)/50
-                self.attack_animation_index = 0
 
             if self.animation_index >= len(self.images[name][0]):
                 self.animation_index = 0

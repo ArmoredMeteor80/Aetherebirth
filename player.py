@@ -19,6 +19,8 @@ class Entity(AnimateSprite):
         self.feet = pygame.Rect(0, 0, self.rect.width*0.5, 8)
         self.old_position = self.position.copy()
         self.is_running = False
+        self.is_attacking = False
+        self.attack_cooldown = 0
 
     def save_location(self):
         """mémorise la position du joueur"""
@@ -79,6 +81,10 @@ class Entity(AnimateSprite):
     def attack(self):
         """Déclenche une attaque"""
         self.change_animation("attack")
+        self.attack_cooldown += 1
+        if self.attack_cooldown == 20:
+            self.is_attacking = False
+            self.attack_cooldown = 0
 
     def update(self):
         """Met à jour la position du joueur"""

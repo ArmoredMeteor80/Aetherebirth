@@ -39,11 +39,15 @@ class Game:
             self.player.move_right()
         elif pressed[pygame.K_z] or pressed[pygame.K_UP]:
             self.player.move_up()
-        if pressed[pygame.K_a]:
+
+        if self.player.is_attacking:
             self.player.attack()
         elif self.player.old_position[0] - self.player.position[0] == 0 \
-                and self.player.old_position[1] - self.player.position[1] == 0:
+                and self.player.old_position[1] - self.player.position[1] == 0 \
+                and self.player.is_attacking is False:
             self.player.change_animation('still')
+            self.player.attack_cooldown = 0
+
         if pressed[pygame.K_LSHIFT]:
             self.player.is_running = True
             self.player.speed = 3
@@ -88,7 +92,7 @@ class Game:
                     self.map_manager.fade_in((0, 0, 0), 2)
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    self.player.attack()
+                    self.player.is_attacking = True
 
             # Animation de démarrage
             if not is_booted:
