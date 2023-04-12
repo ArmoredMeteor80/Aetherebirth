@@ -5,6 +5,11 @@ import pyscroll
 from dialog import DialogBox
 from map import MapManager
 from player import Player
+from save_load_manager import SaveLoadSystem
+
+# Création d'un objet "SaveLoadSystem" gérant le système de sauvegarde et de chargement
+saveloadmanager = SaveLoadSystem(".save", "save_data")
+player_position, current_map = saveloadmanager.load_game_data(["player_position", "current_map"], [(1568, 352), "clairiere_map"])
 
 
 class Game:
@@ -17,8 +22,8 @@ class Game:
         # Change le titre de la fenêtre
         pygame.display.set_caption("Pyb0b")
         # Génération d'un joueur
-        self.player = Player()
-        self.map_manager = MapManager(self.screen, self.player)
+        self.player = Player(player_position)
+        self.map_manager = MapManager(self.screen, self.player, current_map)
         self.dialog_box = DialogBox()
 
     def handle_imput(self):
@@ -95,6 +100,7 @@ class Game:
             for event in pygame.event.get():
                 # Stoppe la boucle de jeu lorsque la fenêtre est fermée
                 if event.type == pygame.QUIT:
+                    saveloadmanager.save_game_data([self.player.position, self.map_manager.current_map], ["player_position", "current_map"])
                     self.map_manager.fade_in((0, 0, 0), 2)
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:

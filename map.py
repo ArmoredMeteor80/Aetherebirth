@@ -31,18 +31,26 @@ class Map:
 class MapManager:
     """Gère la dynamique de carte"""
 
-    def __init__(self, screen, player):
+    def __init__(self, screen, player, current_map):
         # stockage des cartes dans un dictionnaire sous forme "castle" -> Map("castle", walls, group)
         self.maps = dict()
         self.screen = screen
         self.player = player
-        self.current_map = "clairiere_map"
+        self.current_map = current_map
 
         # Chargement des cartes
         self.register_map("clairiere_map", portals=[
             Portal(from_world="clairiere_map", origin_point="enter_castle", target_world="castle_map",
                    teleport_point="spawn_castle"),
-            Portal(from_world="clairiere_map", origin_point="enter_test", target_world="test_map",
+            Portal(from_world="clairiere_map", origin_point="enter_village", target_world="village_map",
+                   teleport_point="spawn_village1")])
+
+        self.register_map("village_map", portals=[
+            Portal(from_world="village_map", origin_point="enter_clairiere", target_world="clairiere_map",
+                   teleport_point="spawn_clairiere2"),
+            Portal(from_world="village_map", origin_point="enter_castle", target_world="castle_map",
+                   teleport_point="spawn_castle"),
+            Portal(from_world="village_map", origin_point="enter_test", target_world="test_map",
                    teleport_point="spawn_test")])
 
         self.register_map("castle_map", portals=[
@@ -54,7 +62,6 @@ class MapManager:
             Portal(from_world="test_map", origin_point="enter_clairiere", target_world="clairiere_map",
                    teleport_point="spawn_clairiere2")])
 
-        self.teleport_player("player")
         self.teleport_npcs()
 
     def check_dialog_collisions(self, dialog_box):
@@ -163,7 +170,10 @@ class MapManager:
             if obj.name == "collision":
                 collision.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
             if "sign" in obj.name:
-                sign_texts[obj.name] = (pygame.Rect(obj.x, obj.y, obj.width, obj.height), [obj.properties["text"]])
+                sign_texts[obj.name] = (pygame.Rect(obj.x, obj.y, obj.width, obj.height), [])
+                for prop in obj.properties:
+                    if prop.startswith("text"):
+                        sign_texts[obj.name][1].append(obj.properties[prop])
 
         # Dessiner le groupe de calques en créant un objet "PyscrollGroup"
         group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
