@@ -108,9 +108,10 @@ class Player(Entity):
 class NPC(Entity):
     """Classe des PNJ héritant de la Classe Entity"""
 
-    def __init__(self, name, nb_points):
+    def __init__(self, name, nb_points, dialog):
         super().__init__(name, 0, 0)
         self.nb_points = nb_points
+        self.dialog = dialog
         self.points = []
         self.name = name
         self.speed = 1

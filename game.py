@@ -2,6 +2,7 @@ import pygame
 import pytmx
 import pyscroll
 
+from dialog import DialogBox
 from map import MapManager
 from player import Player
 
@@ -18,6 +19,7 @@ class Game:
         # Génération d'un joueur
         self.player = Player()
         self.map_manager = MapManager(self.screen, self.player)
+        self.dialog_box = DialogBox()
 
     def handle_imput(self):
         """Permet la gestion de toutes les entrées"""
@@ -62,7 +64,7 @@ class Game:
     def booting_animation(self):
         """Animation de fondu lors du démarrage"""
         # On rend visible la fenêtre de jeu
-        pygame.display.set_mode(self.screen.get_size(), pygame.SCALED | pygame.SHOWN, vsync=1)
+        pygame.display.set_mode(self.screen.get_size(), pygame.SCALED | pygame.SHOWN | pygame.FULLSCREEN, vsync=1)
         self.map_manager.draw()
         self.map_manager.fade_out((255, 255, 255), 5)
 
@@ -83,6 +85,10 @@ class Game:
             self.update()
             # On centre la caméra sur le joueur et affichage des calques sur la fenêtre d'affichage
             self.map_manager.draw()
+            # Affiche les boites de dialogue
+            self.dialog_box.render(self.screen)
+            # Met fin aux boites de dialogues ouvertes si le joueur s'éloigne de la source
+            self.map_manager.terminate_dialog(self.dialog_box)
             # Actualisation de la fenêtre
             pygame.display.flip()
 
@@ -93,6 +99,9 @@ class Game:
                     running = False
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.player.is_attacking = True
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_e:
+                        self.map_manager.check_dialog_collisions(self.dialog_box)
 
             # Animation de démarrage
             if not is_booted:

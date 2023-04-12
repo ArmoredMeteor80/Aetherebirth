@@ -21,6 +21,7 @@ class Map:
     """Data class contenant les propriétés d'une carte"""
     name: str
     collision: list[pygame.Rect]
+    sign_texts: dict
     group: pyscroll.PyscrollGroup
     tmx_data: pytmx.TiledMap
     portals: list[Portal]
@@ -29,6 +30,7 @@ class Map:
 
 class MapManager:
     """Gère la dynamique de carte"""
+
     def __init__(self, screen, player):
         # stockage des cartes dans un dictionnaire sous forme "castle" -> Map("castle", walls, group)
         self.maps = dict()
@@ -46,7 +48,7 @@ class MapManager:
         self.register_map("castle_map", portals=[
             Portal(from_world="castle_map", origin_point="enter_clairiere", target_world="clairiere_map",
                    teleport_point="spawn_clairiere1")
-        ], npcs=[NPC('lutin', 6)])
+        ], npcs=[NPC('lutin', nb_points=6, dialog=["Bonne aventure", "je m'appelle Paul", "A+"])])
 
         self.register_map("test_map", portals=[
             Portal(from_world="test_map", origin_point="enter_clairiere", target_world="clairiere_map",
@@ -54,6 +56,26 @@ class MapManager:
 
         self.teleport_player("player")
         self.teleport_npcs()
+
+    def check_dialog_collisions(self, dialog_box):
+        """Détecte les collisions avec les PNJ et les Panneaux"""
+        for sprite in self.get_group().sprites():
+            # Dialogues avec PNJ
+            if sprite.rect.colliderect(self.player.rect) and type(sprite) is NPC:
+                dialog_box.execute(sprite.dialog)
+            # Dialogues avec Panneaux
+            try:
+                for k in self.get_sign_collision().keys():
+                    if sprite.rect.colliderect(self.get_sign_collision()[k][0]):
+                        dialog_box.execute(self.get_sign_collision()[k][1])
+            except:
+                None
+
+    def terminate_dialog(self, dialog_box):
+        """Met fin au dialogue"""
+        player_position = self.player.old_position
+        if player_position != self.player.position:
+            dialog_box.terminate()
 
     def check_collisions(self):
         """Détecte les collisions"""
@@ -130,14 +152,18 @@ class MapManager:
         map_data = pyscroll.data.TiledMapData(tmx_data)
         # On charge les calques du fichier .tmx
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size(), alpha=True)
-        map_layer.zoom = 3
+        map_layer.zoom = 4
 
         # Définition d'une liste stockant les boites de collision
         collision = []
+        # Définition d'un dictionnaire stockant les textes des panneaux
+        sign_texts = {}
         # On récupère tous les objets de la carte
         for obj in tmx_data.objects:
             if obj.name == "collision":
                 collision.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+            if "sign" in obj.name:
+                sign_texts[obj.name] = (pygame.Rect(obj.x, obj.y, obj.width, obj.height), [obj.properties["text"]])
 
         # Dessiner le groupe de calques en créant un objet "PyscrollGroup"
         group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=4)
@@ -148,7 +174,7 @@ class MapManager:
             group.add(npc)
 
         # Création d'un objet Map qu'on injecte dans le dictionnaire les repertoriant
-        self.maps[name] = Map(name, collision, group, tmx_data, portals, npcs)
+        self.maps[name] = Map(name, collision, sign_texts, group, tmx_data, portals, npcs)
 
     # Accesseurs (getters)
     def get_map(self):
@@ -162,6 +188,10 @@ class MapManager:
     def get_collision(self):
         """Renvoie les collisions"""
         return self.get_map().collision
+
+    def get_sign_collision(self):
+        """Renvoie les collisions avec les panneaux"""
+        return self.get_map().sign_texts
 
     def get_object(self, name):
         """Renvoie l'objet demandé"""
