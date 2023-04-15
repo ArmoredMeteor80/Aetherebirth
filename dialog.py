@@ -7,7 +7,7 @@ class DialogBox:
     def __init__(self):
         """Constructeur"""
         self.box = pygame.image.load('assets/dialogs/dialog_box.png').convert_alpha()
-        self.box = pygame.transform.scale(self.box, (1200, 188))
+        self.box = pygame.transform.scale(self.box, (1200, 220))
         self.texts = []
         self.letter_index = 0
         self.text_index = 0

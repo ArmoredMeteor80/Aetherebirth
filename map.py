@@ -96,7 +96,7 @@ class MapManager:
                     copy_portal = portal
                     self.current_map = portal.target_world
                     self.teleport_player(copy_portal.teleport_point)
-                    self.fade_in((49, 26, 18), 5)
+                    game.Game.fade_in(self, (49, 26, 18), 5)
                     self.fade_out((49, 26, 18), 5)
 
         # Support des collisions
@@ -110,19 +110,6 @@ class MapManager:
                     sprite.speed = 1
             if sprite.feet.collidelist(self.get_collision()) > -1:
                 sprite.move_back()
-
-    def fade_in(self, color, speed):
-        """Filtre de fondu"""
-        # on fait une copie de l'écran
-        screen_image = self.screen.copy()
-        # Surface qui va faire le fondu en augmentant et baissant sa valeur d'alpha
-        fade = pygame.Surface(self.screen.get_size()).convert_alpha()
-        fade.fill(color)
-        for alpha in range(0, 256, speed):
-            self.screen.blit(screen_image, (0, 0))
-            fade.set_alpha(alpha)
-            self.screen.blit(fade, (0, 0))
-            pygame.display.update()
 
     def fade_out(self, color, speed):
         """Filtre de fondu inverse"""
