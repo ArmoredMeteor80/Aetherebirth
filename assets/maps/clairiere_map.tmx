@@ -237,7 +237,7 @@
   <object id="21" name="spawn_clairiere1" x="1568" y="352">
    <point/>
   </object>
-  <object id="22" name="enter_village" x="-27.3333" y="127.333" width="33.3333" height="160"/>
+  <object id="22" name="enter_village1" x="-27.3333" y="127.333" width="33.3333" height="160"/>
   <object id="23" name="collision" x="1483" y="224" width="9.90909" height="22.7273"/>
   <object id="30" name="collision" x="1834.91" y="416.091" width="9.90909" height="22.7273"/>
   <object id="24" name="collision" x="1003.18" y="256.091" width="9.90909" height="22.7273"/>

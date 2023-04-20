@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="186">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="245">
  <tileset firstgid="1" source="tiled_ressources/tilesets/grass.tsx"/>
  <tileset firstgid="81" source="tiled_ressources/tilesets/props.tsx"/>
  <tileset firstgid="337" source="tiled_ressources/tilesets/shadow.tsx"/>
@@ -101,7 +101,7 @@
 0,0,0,0,422,423,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,212,212,0,0,0,0,2161,2162,2163,2164,0,0,0,0,0,
 444,445,0,0,0,0,0,0,0,0,0,0,0,0,0,0,526,527,0,0,0,0,0,0,0,0,422,423,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,444,445,0,0,0,0,0,0,0,0,0,0,0,0,444,
 460,461,0,0,422,423,0,0,0,0,0,0,0,0,0,0,542,543,0,0,0,0,0,0,0,0,227,227,0,0,0,0,0,0,0,0,0,0,0,0,422,423,0,0,2195,460,484,0,0,0,0,0,0,2199,2200,2201,0,0,0,460,
-467,467,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2215,2216,2217,0,0,0,0,
+467,467,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,484,0,0,0,0,0,0,0,0,0,0,0,0,0,2215,2216,2217,0,0,0,0,
 467,467,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,676,676,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,545,546,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -160,7 +160,7 @@
 0,0,0,0,0,216,0,0,218,0,0,1094,1095,1096,1097,1098,157,0,0,0,0,0,0,0,0,0,0,0,0,109,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,667,0,0,0,0,0,0,0,0,0,0,
 0,0,138,139,0,0,0,0,0,0,0,1129,1130,1131,1132,1133,975,0,0,0,0,0,0,0,0,196,0,0,0,0,0,0,0,0,0,0,0,0,0,1134,1135,1136,1137,1138,0,0,0,0,0,0,0,0,0,0,0,0,0,667,0,0,
 0,0,214,0,0,0,0,0,0,0,0,1164,1165,1171,1167,1168,1010,0,0,0,0,230,198,230,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1169,1170,1166,1172,1173,0,663,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,248,0,0,218,0,0,216,0,0,1199,1200,1206,1202,1203,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,132,1204,1205,1201,1207,1208,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,248,0,0,218,0,0,216,0,0,1199,1200,1206,1202,1203,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,132,1204,1205,1201,1207,1208,0,164,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,742,742,742,742,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1396,1397,1397,1397,1397,1397,1397,1398,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1031,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,1431,1248,0,1572,1248,0,0,1433,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,723,723,682,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -169,7 +169,7 @@
 0,0,0,0,166,1129,1130,1131,1132,1133,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1164,1165,1166,1167,1168,0,0,0,1134,1135,1136,1137,1138,0,0,0,0,0,0,0,0,0,0,0,0,659,0,0,0,0,0,0,0,
 0,0,0,0,0,1164,1165,1166,1167,1168,978,0,0,0,0,0,270,271,0,0,0,0,0,0,0,0,166,1199,1200,1201,1202,1203,0,0,975,1169,1170,1171,1172,1173,0,0,0,0,0,1031,0,0,0,0,0,0,0,758,758,758,758,0,0,0,
 204,0,0,0,166,1199,1200,1201,1202,1203,1013,0,0,0,0,0,286,287,0,0,0,0,0,0,0,0,226,1029,1029,1029,1029,1029,0,0,1010,1204,1205,1206,1207,1208,166,0,0,0,723,204,228,0,0,0,0,0,0,758,758,758,0,0,0,204,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,758,758,758,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,228,0,0,0,0,0,0,0,0,0,0,0,0,0,758,758,758,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,676,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,289,290,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -178,6 +178,40 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,724,724,724,0,0,0,0,0,0,0,663,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,276,276,276,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,659,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,659,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,667,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="10" name="blank" width="60" height="30">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
  <layer id="6" name="tree" width="60" height="30">
@@ -215,7 +249,7 @@
 </data>
  </layer>
  <objectgroup id="7" name="objects">
-  <object id="1" name="sign_4" x="799.387" y="329.534" width="28.125" height="24.2045">
+  <object id="1" name="sign_4" x="795.296" y="335.898" width="36.0341" height="28.4772">
    <properties>
     <property name="text" value="&quot;Statue sacrée - Faites un don.&quot;"/>
    </properties>
@@ -265,8 +299,7 @@
   <object id="59" name="collision" x="68.75" y="33.25" width="22.5" height="29.75"/>
   <object id="60" name="collision" x="102.5" y="160.25" width="18.75" height="23"/>
   <object id="61" name="collision" x="161" y="160.25" width="30" height="24"/>
-  <object id="62" name="collision" x="256" y="159.75" width="32.25" height="57.25"/>
-  <object id="64" name="collision" x="64" y="319.667" width="64.3333" height="27.6667"/>
+  <object id="62" name="collision" x="237.818" y="194.909" width="13.25" height="20.1591"/>
   <object id="66" name="collision" x="161" y="288" width="30" height="23.875"/>
   <object id="68" name="collision" x="70.5" y="384" width="19" height="23.25"/>
   <object id="69" name="collision" x="161" y="384" width="30.25" height="24.25"/>
@@ -286,19 +319,19 @@
   <object id="83" name="collision" x="1578.97" y="288.1" width="10.1818" height="22.7273"/>
   <object id="84" name="collision" x="1834.97" y="320.1" width="10.1818" height="22.7273"/>
   <object id="85" name="collision" x="234.97" y="928.184" width="10.1818" height="22.7273"/>
-  <object id="86" name="sign_5" x="159.909" y="160.273" width="32.1818" height="26.4545">
+  <object id="86" name="sign_5" x="159.909" y="160.273" width="32.1818" height="31.727">
    <properties>
     <property name="text_1" value="Eddy Donmarcel | 833 - 879"/>
     <property name="text_2" value="Mort par noyade dans un bol de soupe : Cette personne a essayé de boire sa soupe trop chaude et a inhalé accidentellement une grande quantité de liquide chaud, ce qui a provoqué sa noyade."/>
    </properties>
   </object>
-  <object id="87" name="sign_6" x="64.0511" y="224" width="32.1818" height="27.1818">
+  <object id="87" name="sign_6" x="64" y="224" width="32" height="32">
    <properties>
     <property name="text_1" value="Fanette Lussier | 861 - 890"/>
     <property name="text_2" value="Mort par chat : Cette personne a été étouffée par son chat en dormant."/>
    </properties>
   </object>
-  <object id="93" name="sign_7" x="255.989" y="287.996" width="32.1818" height="26.6818">
+  <object id="93" name="sign_7" x="255.989" y="287.996" width="32.1818" height="32.004">
    <properties>
     <property name="text_1" value="Audrey Lapointe | 822 - 883"/>
     <property name="text_2" value="Mort par piqûre d'abeille : Cette personne était allergique aux abeilles et a été piquée par une abeille alors qu'elle travaillait dans son jardin, ce qui a entraîné une réaction mortelle."/>
@@ -306,31 +339,25 @@
   </object>
   <object id="90" name="collision" x="65.0625" y="223.938" width="29.9375" height="24.0625"/>
   <object id="94" name="collision" x="256.938" y="288" width="30.0625" height="24"/>
-  <object id="95" name="sign_8" x="159.818" y="384" width="32.4545" height="27">
+  <object id="95" name="sign_8" x="159.818" y="384" width="32.4545" height="32">
    <properties>
     <property name="text_1" value="Eugène Lacroix | 804 - 854"/>
     <property name="text_2" value="Mort par glissade sur une banane : Cette personne a glissé sur une banane dans une épicerie et a frappé sa tête sur le sol, entraînant sa mort."/>
    </properties>
   </object>
-  <object id="96" name="sign_9" x="62.8182" y="309.818" width="33.2727" height="38.9091">
-   <properties>
-    <property name="text_1" value="Pascal Givry | 799 - 868"/>
-    <property name="text_2" value="Mort par éternuement : Cette personne a éternué si fort qu'elle a provoqué une rupture d'anévrisme et est décédée."/>
-   </properties>
-  </object>
-  <object id="97" name="sign_10" x="254.364" y="185" width="35.7273" height="35.1591">
+  <object id="97" name="sign_10" x="254.364" y="185" width="35.7273" height="39">
    <properties>
     <property name="text_1" value="Alphonse Danlmur | 803 - 865"/>
     <property name="text_2" value="Mort par chute de météorite : Cette personne a été frappée par une météorite alors qu'elle se promenait à l'extérieur."/>
    </properties>
   </object>
-  <object id="98" name="sign_11" x="159.826" y="287.957" width="32.3478" height="27.6522">
+  <object id="98" name="sign_11" x="159.826" y="287.957" width="32.3478" height="32.043">
    <properties>
     <property name="text_1" value="Hardouin Bélair | 832 - 875"/>
     <property name="text_2" value="Mort par éboulement de donjon : Ce seigneur de guerre a fait construire un donjon surdimensionné et mal conçu, et un jour, il s'est effondré sur lui, l'écrasant."/>
    </properties>
   </object>
-  <object id="99" name="sign_12" x="256" y="384" width="32.1875" height="26.9318">
+  <object id="99" name="sign_12" x="256" y="384" width="32.1875" height="32">
    <properties>
     <property name="text_1" value="Daniel Brillant | 852 - 894"/>
     <property name="text_2" value="Mort par décapitation accidentelle : Ce chevalier en train de s'entraîner au maniement de l'épée a accidentellement tranché sa propre tête."/>
@@ -349,9 +376,6 @@
   <object id="113" name="collision" x="0" y="832" width="32" height="27"/>
   <object id="114" name="collision" x="1632" y="64" width="32.125" height="27.25"/>
   <object id="115" name="collision" x="1824" y="63.875" width="32.125" height="27.375"/>
-  <object id="116" name="Spawn_village3" x="45.6667" y="742.333">
-   <point/>
-  </object>
   <object id="117" name="spawn_village1" x="1872.95" y="743.909">
    <point/>
   </object>
@@ -360,16 +384,15 @@
   </object>
   <object id="119" name="enter_castle" x="1663.5" y="-20" width="160.5" height="32"/>
   <object id="120" name="enter_clairiere" x="1910.5" y="668" width="56" height="163.5"/>
-  <object id="121" name="enter_test" x="-25.5" y="668.5" width="30.5" height="164"/>
   <object id="122" name="collision" x="800.125" y="319.875" width="26.75" height="32.125"/>
-  <object id="125" name="sign_13" x="66.1875" y="33.4375" width="27.25" height="33.75">
+  <object id="125" name="sign_13" x="66.1875" y="33.4375" width="27.25" height="34.8409">
    <properties>
     <property name="text_1" value="b0b | ??? - 1972"/>
     <property name="text_2" value="Présumé mort par disparition : Cette personne s'est mystérieusement volatilisée."/>
    </properties>
   </object>
   <object id="127" name="collision" x="192.984" y="224.054" width="30" height="24"/>
-  <object id="128" name="sign_14" x="191.83" y="224.074" width="32.1818" height="30.8181">
+  <object id="128" name="sign_14" x="191.83" y="224.074" width="32.1818" height="31.926">
    <properties>
     <property name="text_1" value="Link Link | 841 - 871"/>
     <property name="text_2" value="Mort par attaque de poulets : Cet ancien héros légendaire de la contrée d'Hyrule a élevé des poulets agressifs qui ont finalement pris le dessus et l'ont attaqué à mort."/>
@@ -415,7 +438,7 @@
   </object>
   <object id="145" name="collision" x="1154.25" y="783.5" width="58" height="40.75"/>
   <object id="147" name="collision" x="1475.94" y="639.938" width="23.0625" height="32.0625"/>
-  <object id="149" name="sign_21" x="1466.49" y="650.188" width="39.6932" height="27.7841">
+  <object id="149" name="sign_21" x="1472" y="669" width="32" height="17.0341">
    <properties>
     <property name="text" value="&quot;Bienvenue à Châtelard !&quot;"/>
    </properties>
@@ -458,7 +481,7 @@
     <property name="text" value="L'étang à l'air profond..."/>
    </properties>
   </object>
-  <object id="179" name="sign_31" x="1474.69" y="638" width="26.2253" height="10.4704">
+  <object id="179" name="sign_31" x="1472" y="631" width="32" height="10.4704">
    <properties>
     <property name="text_1" value="Vous essayez de lire ce qu'il y a d'inscrit sur le panneau."/>
     <property name="text_2" value="Mais vous vous touvez derrière..."/>
@@ -486,7 +509,7 @@
     <property name="text_4" value="Il n'ont pas l'air de bien s'entendre."/>
    </properties>
   </object>
-  <object id="183" name="sign_43" x="128" y="568.125" width="32.125" height="39.625">
+  <object id="183" name="sign_43" x="128" y="575.739" width="32.125" height="32.0114">
    <properties>
     <property name="text_1" value="Une odeur nauséabonde s'échappe de ce tonneau."/>
     <property name="text_2" value="Quelque chose coule contre la paroi."/>
@@ -499,7 +522,7 @@
     <property name="text_3" value="Ce nom vous semble familier..."/>
    </properties>
   </object>
-  <object id="185" name="sign_44" x="1558" y="277.818" width="51.2727" height="42.3636">
+  <object id="185" name="sign_45" x="1558" y="277.818" width="51.2727" height="42.3636">
    <properties>
     <property name="text_1" value="Vous entendez des voix mais n'arrivez pas à trouver d'où elles viennent."/>
     <property name="text_2" value="Selon les lois de l'aviation, I'abeille est totalement incapable de voler. Ses ailes sont trop minuscules pour porter son petit corps grassouillet."/>
@@ -511,6 +534,107 @@
     <property name="text_8" value="Vous décidez de quitter cet endroit."/>
    </properties>
   </object>
+  <object id="186" name="collision" x="1251.36" y="671.727" width="24.2727" height="32.4545"/>
+  <object id="188" name="sign_52" x="1248.73" y="686" width="28.9091" height="20.5455">
+   <properties>
+    <property name="text_1" value="&quot; Chez Alphonse Danlmur - Artisan&quot;"/>
+   </properties>
+  </object>
+  <object id="189" name="enter_maison1" x="1188.13" y="655.125" width="23.875" height="8.25"/>
+  <object id="190" name="spawn_village4" x="1184.14" y="672.409">
+   <point/>
+  </object>
+  <object id="191" name="enter_maison2" x="1059.94" y="239.938" width="24.0625" height="6.5625"/>
+  <object id="192" name="spawn_village5" x="1055.96" y="256.854">
+   <point/>
+  </object>
+  <object id="193" name="enter_maison3" x="419.909" y="399" width="24.0909" height="8.09091"/>
+  <object id="194" name="spawn_village6" x="416" y="415.75">
+   <point/>
+  </object>
+  <object id="195" name="collision" x="-25" y="671" width="25" height="165.5"/>
+  <object id="220" name="sign_57" x="32" y="704" width="32" height="32">
+   <properties>
+    <property name="text_1" value="Désolé, vous ne pouvez pas passer."/>
+    <property name="text_2" value="Il y a eu un éboulement sur le chemin."/>
+   </properties>
+  </object>
+  <object id="221" name="sign_58" x="1056" y="640" width="32" height="32">
+   <properties>
+    <property name="text_1" value="&quot;Elle prend la poussière cette maison.&quot;"/>
+    <property name="text_2" value="&quot;Ça réveille mes allergies !&quot;"/>
+   </properties>
+  </object>
+  <object id="222" name="sign_59" x="1502.63" y="350.25" width="34.0833" height="34.1667">
+   <properties>
+    <property name="text_1" value="Je serai toi, je n'irai pas dans cette direction."/>
+    <property name="text_2" value="J'ai entendu des bruits terrifiants provenant du château !"/>
+   </properties>
+  </object>
+  <object id="223" name="collision" x="1442.73" y="384.182" width="27.4545" height="31.8182"/>
+  <object id="224" name="sign_60" x="1440" y="401.591" width="32" height="29.5339">
+   <properties>
+    <property name="text" value="&quot;Château de Châtelard&quot;"/>
+   </properties>
+  </object>
+  <object id="226" name="collision" x="64" y="320" width="64.3333" height="27.6667"/>
+  <object id="227" name="sign_9" x="58.9527" y="327.028" width="36.1818" height="26.3636">
+   <properties>
+    <property name="text_1" value="Pascal Givry | 799 - 868"/>
+    <property name="text_2" value="Mort par éternuement : Cette personne a éternué si fort qu'elle a provoqué une rupture d'anévrisme et est décédée."/>
+   </properties>
+  </object>
+  <object id="228" name="sign_61" x="64" y="288" width="32" height="23.0909">
+   <properties>
+    <property name="text_1" value="&quot;Pascal...&quot;"/>
+    <property name="text_2" value="Cette personne à l'air très triste."/>
+    <property name="text_3" value="Vous décidez de ne pas la déranger."/>
+   </properties>
+  </object>
+  <object id="231" name="collision" x="255.875" y="158.102" width="32.25" height="57.25"/>
+  <object id="232" name="sign_62" x="1440" y="377" width="32" height="10.4704">
+   <properties>
+    <property name="text_1" value="Vous essayez de lire ce qu'il y a d'inscrit sur le panneau."/>
+    <property name="text_2" value="Mais vous vous touvez derrière..."/>
+   </properties>
+  </object>
+  <object id="236" name="sign_63" x="768" y="159.909" width="32.1818" height="32.1818">
+   <properties>
+    <property name="text_1" value="Vous trouvez ce lutin très pensif et décidez de ne pas le déranger."/>
+    <property name="text_2" value="Il pourrait ne pas être très sympa si l'on venait le déranger."/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup id="8" name="NPCPath"/>
+ <objectgroup id="8" name="NPCPath">
+  <object id="197" name="lutin_pink_path1_1" x="768" y="160" width="16" height="16"/>
+  <object id="199" name="lutin_purple_path1_1" x="1056" y="640" width="16" height="16"/>
+  <object id="200" name="lutin_green_path1_1" x="864" y="384" width="16" height="16"/>
+  <object id="201" name="lutin_green_path2_1" x="864" y="448" width="16" height="16"/>
+  <object id="202" name="lutin_green_path3_1" x="576" y="448" width="16" height="16"/>
+  <object id="204" name="lutin_green_path4_1" x="576" y="128" width="16" height="16"/>
+  <object id="205" name="lutin_green_path5_1" x="704" y="128" width="16" height="16"/>
+  <object id="206" name="lutin_green_path6_1" x="704" y="96" width="16" height="16"/>
+  <object id="207" name="lutin_green_path7_1" x="864" y="96" width="16" height="16"/>
+  <object id="208" name="lutin_red_path1_1" x="768" y="576" width="16" height="16"/>
+  <object id="209" name="lutin_red_path2_1" x="768" y="704" width="16" height="16"/>
+  <object id="210" name="lutin_red_path3_1" x="992" y="704" width="16" height="16"/>
+  <object id="211" name="lutin_red_path4_1" x="992" y="736" width="16" height="16"/>
+  <object id="212" name="lutin_red_path5_1" x="1312" y="736" width="16" height="16"/>
+  <object id="213" name="lutin_red_path6_1" x="1312" y="672" width="16" height="16"/>
+  <object id="214" name="lutin_red_path9_1" x="640" y="736" width="16" height="16"/>
+  <object id="218" name="lutin_red_path7_1" x="1504" y="672" width="16" height="16"/>
+  <object id="215" name="lutin_red_path10_1" x="640" y="576" width="16" height="16"/>
+  <object id="219" name="lutin_red_path8_1" x="1504" y="736" width="16" height="16"/>
+  <object id="216" name="lutin_yellow_path1_1" x="1504" y="352" width="16" height="16"/>
+  <object id="217" name="lutin_cyan_path1_1" x="32" y="704" width="16" height="16"/>
+  <object id="230" name="lutin_lime_green_path1_1" x="64" y="288" width="16" height="16"/>
+  <object id="234" name="lutin_green_path1_2" x="1024" y="320" width="16" height="16"/>
+  <object id="235" name="lutin_green_path2_2" x="1024" y="388" width="16" height="16"/>
+  <object id="237" name="lutin_lime_green_path1_2" x="160" y="544" width="16" height="16"/>
+  <object id="239" name="lutin_lime_green_path2_2" x="288" y="544" width="16" height="16"/>
+  <object id="241" name="lutin_cyan_path1_2" x="608" y="480" width="16" height="16"/>
+  <object id="242" name="lutin_cyan_path2_2" x="832" y="480" width="16" height="16"/>
+  <object id="243" name="lutin_cyan_path3_2" x="832" y="544" width="16" height="16"/>
+  <object id="244" name="lutin_cyan_path4_2" x="608" y="544" width="16" height="16"/>
+ </objectgroup>
 </map>

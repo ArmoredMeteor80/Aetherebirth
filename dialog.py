@@ -13,9 +13,11 @@ class DialogBox:
         self.text_index = 0
         self.font = pygame.font.Font('assets/dialogs/dialog_font.ttf', 36)
         self.reading = False
+        self.sound = pygame.mixer.Sound('assets/sounds/dialog_sound.wav')
 
     def execute(self, dialog):
         """Permet l'execution de la boite de dialogue"""
+        pygame.mixer.Sound.play(self.sound).set_volume(0.2)
         if self.reading:
             self.next_text()
         else:

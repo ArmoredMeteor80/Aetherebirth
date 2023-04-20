@@ -2,6 +2,7 @@ import pygame
 import random
 
 
+# La classe "AnimateSprite" hérite de la classe parente "Sprite" de pygame.sprite
 class AnimateSprite(pygame.sprite.Sprite):
     """Classe qui anime les sprites"""
     def __init__(self, name):
@@ -28,7 +29,7 @@ class AnimateSprite(pygame.sprite.Sprite):
                 "up": (self.get_images(32, 0, 0), 1),
                 "right": (self.get_images(64, 0, 0), 2),
                 "left": (self.get_images(96, 0, 0), 3),
-                "still": (self.get_images(0, 0, 1), 0)
+                "still_npc": (self.get_images(0, 0, 1), 0)
             }
         self.animation_index = 0
         self.attack_animation_index = 0
@@ -65,27 +66,28 @@ class AnimateSprite(pygame.sprite.Sprite):
             self.clock += self.speed * 6
 
             # On cadence l'animation
-            if self.clock >= 100:
+            if self.clock >= 100 and name != 'still_npc':
                 # On passe à l'image suivante
                 self.animation_index += 1
                 self.clock = 0
+
             if name != 'still':
                 self.images['still'] = (self.get_images(self.images[name][1] * 32, 0, 1), 0)
                 self.images['attack'] = (self.get_images(self.images[name][1]*32 + 128, 0, 11), 0)
 
-    def get_images(self, y, start, end):
+    def get_images(self, y, start, end, size=32):
         """Renvoie une liste d'images"""
         images = []
         for i in range(start, end+1):
-            x = i * 32
+            x = i * size
             image = self.get_image(x, y)
             images.append(image)
         return images
 
-    def get_image(self, x, y):
+    def get_image(self, x, y, size=32):
         """Renvoie les coordonnées x, y du sprite sheet de l'entité """
-        # Création d'une surface de 32 par 32 pixels
-        image = pygame.Surface([32, 32], pygame.SRCALPHA)
+        # Création d'une surface de taille size par size
+        image = pygame.Surface([size, size], pygame.SRCALPHA)
         # On récupère le sprite du sprite sheet
-        image.blit(self.sprite_sheet, (0, 0), (x, y, 32, 32))
+        image.blit(self.sprite_sheet, (0, 0), (x, y, size, size))
         return image

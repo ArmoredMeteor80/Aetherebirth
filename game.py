@@ -29,6 +29,11 @@ class Game:
             self.dialog_box = DialogBox()
             self.controls_shown = controls_shown
 
+        # Dictionnaire contenant les sons du jeu
+        self.sounds = {'click_sound_effect': pygame.mixer.Sound('assets/sounds/click_sound_effect.wav'),
+                       'punch_sound_effect': pygame.mixer.Sound('assets/sounds/punch_sound_effect.wav'),
+                       'click_error_sound_effect': pygame.mixer.Sound('assets/sounds/click_error_sound_effect.wav')}
+
         # Change le titre de la fenêtre
         pygame.display.set_caption("Pyb0b")
         self.running = True
@@ -81,6 +86,7 @@ class Game:
             self.saveloadmanager.save_game_data(
                 [self.player.position, self.map_manager.current_map, self.controls_shown],
                 ["player_position", "current_map", "controls_shown"])
+        pygame.mixer.music.fadeout(1500)
         self.fade_in((0, 0, 0), 2)
         self.running = False
 
@@ -135,6 +141,11 @@ class Game:
             img = font.render(text_list[i], False, text_color)
             self.screen.blit(img, pos_list[i])
 
+    def play_sound(self, sound_name, volume=1):
+        """Joue le son passé en paramètre"""
+        if sound_name in self.sounds:
+            pygame.mixer.Sound.play(self.sounds[sound_name]).set_volume(volume)
+
     def run(self):
         """Boucle du jeu"""
         # Création d'un objet "Clock" permettant de gérer le temps
@@ -148,9 +159,14 @@ class Game:
             quit_button_rect = pygame.Rect(1300, 750, 400, 100)
 
             # On charge l'image de fond du menu ainsi que le logo du jeu
-            background = pygame.image.load("assets/ressources/background.png").convert()
-            logo = pygame.image.load("assets/ressources/logo_pybob.png").convert_alpha()
+            background = pygame.image.load('assets/ressources/background.png').convert()
+            logo = pygame.image.load('assets/ressources/logo_pybob.png').convert_alpha()
             logo = pygame.transform.scale(logo, (800, 400))
+
+            # On charge la musique de fond puis on la joue, par la même on charge un son de clic
+            pygame.mixer.music.load('assets/sounds/bg_music.ogg')
+            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.play(-1)
 
             screen = pygame.display.set_mode(self.screen.get_size(), pygame.SCALED | pygame.FULLSCREEN | pygame.SHOWN,
                                              vsync=1)
@@ -164,10 +180,16 @@ class Game:
 
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if new_game_button_rect.collidepoint(event.pos):
+                            self.play_sound('click_sound_effect')
                             return "new_game"
-                        elif continue_button_rect.collidepoint(event.pos) and len(os.listdir("save_data")) != 0:
-                            return "continue"
+                        elif continue_button_rect.collidepoint(event.pos):
+                            if len(os.listdir("save_data")) != 0:
+                                self.play_sound('click_sound_effect')
+                                return "continue"
+                            else:
+                                self.play_sound('click_error_sound_effect', 0.8)
                         elif quit_button_rect.collidepoint(event.pos):
+                            self.play_sound('click_sound_effect')
                             return "quit"
 
                 # On dessine les boutons
@@ -213,6 +235,12 @@ class Game:
                 # On met à jour la fenêtre
                 pygame.display.flip()
 
+        # Avant la boucle, on charge les images nécessaires
+        box = pygame.image.load('assets/dialogs/dialog_box.png').convert_alpha()
+        box = pygame.transform.scale(box, (330, 182))
+        hp_bar = pygame.image.load('assets/ressources/heart.png').convert_alpha()
+        hp_bar = pygame.transform.scale(hp_bar, (64, 64))
+
         # Boucle du jeu
         while self.running:
 
@@ -228,15 +256,20 @@ class Game:
             self.dialog_box.render(self.screen)
             # Met fin aux boites de dialogues ouvertes si le joueur s'éloigne de la source
             self.map_manager.terminate_dialog(self.dialog_box)
+
             # Affiche les contôles dans le coin supérieur gauche
             if self.controls_shown:
-                box = pygame.image.load('assets/dialogs/dialog_box.png').convert_alpha()
-                box = pygame.transform.scale(box, (330, 182))
-                self.screen.blit(box, (0, 4))
+
+                self.screen.blit(box, (1590, 10))
                 text_list, pos_list = ["Déplacements : Z, Q, S, D", "Sprint : Shift", "Interactions : E",
                                        "Combat : Clic Gauche", "Masquer commandes : P", "Fermer Jeu : Echap"], \
-                                      [(35, 15), (35, 40), (35, 65), (35, 90), (35, 115), (35, 140)]
+                                      [(1620, 21), (1620, 46), (1620, 71), (1620, 96), (1620, 121), (1620, 146)]
                 self.draw_text(text_list, pos_list, size=20)
+
+            # Affiche la barre de vie
+            for i in range(self.player.stats["hp"]):
+                self.screen.blit(hp_bar, (i*75+20, 10))
+
             # Actualisation de la fenêtre
             pygame.display.flip()
 
@@ -245,6 +278,8 @@ class Game:
                 if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                     self.shutting_down()
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    if not self.player.is_attacking:
+                        self.play_sound('punch_sound_effect')
                     self.player.is_attacking = True
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
@@ -265,4 +300,3 @@ class Game:
 
         # Déinitialise tous les modules pygame
         pygame.quit()
-

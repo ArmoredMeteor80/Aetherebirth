@@ -1,10 +1,9 @@
 import pygame
-import random
 
 from animation import AnimateSprite
 
 
-# La classe "Player" hérite de la classe parente "Sprite" de pygame.sprite
+# La classe "Player" hérite de la classe "AnimateSprite".
 class Entity(AnimateSprite):
     """Classe d'une entité"""
 
@@ -78,6 +77,10 @@ class Entity(AnimateSprite):
         self.position[0] -= self.speed-1
         self.position[1] -= self.speed-1
 
+    def stay_still(self):
+        """Permet aux PNJ de rester statiques"""
+        self.change_animation("still_npc")
+
     def attack(self):
         """Déclenche une attaque"""
         self.change_animation("attack")
@@ -103,43 +106,47 @@ class Player(Entity):
 
     def __init__(self, position):
         super().__init__("bob", position[0], position[1])
+        self.stats = {"hp": 3}
 
 
 class NPC(Entity):
     """Classe des PNJ héritant de la Classe Entity"""
 
-    def __init__(self, name, nb_points, dialog):
+    def __init__(self, name, nb_points, dialog, npc_id):
         super().__init__(name, 0, 0)
         self.nb_points = nb_points
         self.dialog = dialog
         self.points = []
         self.name = name
         self.speed = 1
-        self.speed = 1
         self.current_point = 0
+        self.id = npc_id
 
     def move(self):
         """Déplace le PNJ"""
-        current_point = self.current_point
-        target_point = self.current_point + 1
+        if self.nb_points == 1:
+            self.stay_still()
+        else:
+            current_point = self.current_point
+            target_point = self.current_point + 1
 
-        if target_point == self.nb_points:
-            target_point = 0
+            if target_point == self.nb_points:
+                target_point = 0
 
-        current_rect = self.points[current_point]
-        target_rect = self.points[target_point]
+            current_rect = self.points[current_point]
+            target_rect = self.points[target_point]
 
-        if current_rect.y < target_rect.y and abs(current_rect.x - target_rect.x) < 3:
-            self.move_down()
-        elif current_rect.y > target_rect.y and abs(current_rect.x - target_rect.x) < 3:
-            self.move_up()
-        elif current_rect.x > target_rect.x and abs(current_rect.y - target_rect.y) < 3:
-            self.move_left()
-        elif current_rect.x < target_rect.x and abs(current_rect.y - target_rect.y) < 3:
-            self.move_right()
+            if current_rect.y < target_rect.y and abs(current_rect.x - target_rect.x) < 3:
+                self.move_down()
+            elif current_rect.y > target_rect.y and abs(current_rect.x - target_rect.x) < 3:
+                self.move_up()
+            elif current_rect.x > target_rect.x and abs(current_rect.y - target_rect.y) < 3:
+                self.move_left()
+            elif current_rect.x < target_rect.x and abs(current_rect.y - target_rect.y) < 3:
+                self.move_right()
 
-        if self.rect.colliderect(target_rect):
-            self.current_point = target_point
+            if self.rect.colliderect(target_rect):
+                self.current_point = target_point
 
     def teleport_spawn(self):
         """Place le PNJ à son point d'apparition"""
@@ -151,6 +158,6 @@ class NPC(Entity):
     def load_points(self, tmx_data):
         """Charge les points de passage du PNJ"""
         for num in range(1, self.nb_points+1):
-            point = tmx_data.get_object_by_name(f"{self.name}_path{num}")
+            point = tmx_data.get_object_by_name(f"{self.name}_path{num}_{self.id}")
             rect = pygame.Rect(point.x, point.y, point.width, point.height)
             self.points.append(rect)
