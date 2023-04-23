@@ -1,11 +1,12 @@
 import os
 import pygame
 
-
-from dialog import DialogBox
-from map import MapManager
-from player import Player
 from save_load_manager import SaveLoadSystem
+
+from map import MapManager
+from entity import Player
+from ui import UI
+from dialog import DialogBox
 
 
 class Game:
@@ -28,11 +29,13 @@ class Game:
             self.map_manager = MapManager(self.screen, self.player, current_map)
             self.dialog_box = DialogBox()
             self.controls_shown = controls_shown
+            self.ui = UI()
 
         # Dictionnaire contenant les sons du jeu
         self.sounds = {'click_sound_effect': pygame.mixer.Sound('assets/sounds/click_sound_effect.wav'),
+                       'click_error_sound_effect': pygame.mixer.Sound('assets/sounds/click_error_sound_effect.wav'),
                        'punch_sound_effect': pygame.mixer.Sound('assets/sounds/punch_sound_effect.wav'),
-                       'click_error_sound_effect': pygame.mixer.Sound('assets/sounds/click_error_sound_effect.wav')}
+                       'exhausted_sound_effect': pygame.mixer.Sound('assets/sounds/exhausted_sound_effect.wav')}
 
         # Change le titre de la fenêtre
         pygame.display.set_caption("Pyb0b")
@@ -60,20 +63,30 @@ class Game:
         elif pressed[pygame.K_z] or pressed[pygame.K_UP]:
             self.player.move_up()
 
+        # Attaque du joueur
         if self.player.is_attacking:
             self.player.attack()
-        elif self.player.old_position[0] - self.player.position[0] == 0 \
-                and self.player.old_position[1] - self.player.position[1] == 0 \
-                and self.player.is_attacking is False:
+
+        elif self.player.old_position == self.player.position and self.player.is_attacking is False:
             self.player.change_animation('still')
             self.player.attack_cooldown = 0
 
-        if pressed[pygame.K_LSHIFT]:
+        # Course du joueur
+        if pressed[pygame.K_LSHIFT] and not self.player.is_exhausted[0]:
             self.player.is_running = True
             self.player.speed = 3
+            if self.player.stamina <= 1:
+                self.player.is_exhausted[0] = True
+                self.play_sound('exhausted_sound_effect')
+            if self.player.position == self.player.old_position:
+                self.player.stamina_regen(0.2)
+            else:
+                self.player.stamina_depletion(0.2)
         else:
             self.player.is_running = False
             self.player.speed = 2
+            self.player.stamina_regen(0.2)
+            self.player.check_exhaustion()
 
     def update(self):
         """Actualise le groupe"""
@@ -108,8 +121,8 @@ class Game:
         fade = pygame.Surface(self.screen.get_size()).convert_alpha()
         fade.fill(color)
         if self.is_starting_menu_over:
-            # Fondu inverse, on met d'abord à jour le joueur qui se met sur la nouvelle carte chargée,
-            # puis on draw deux fois de sorte à afficher la carte derrière le fondu et centrer la caméra sur le joueur
+            # Fondu inverse, on met d'abord à jour le joueur qui se met sur la nouvelle carte chargée, puis
+            # on dessine deux fois de sorte à afficher la carte derrière le fondu et centrer la caméra sur le joueur
             self.map_manager.player.update()
             self.map_manager.draw()
             self.map_manager.draw()
@@ -238,8 +251,6 @@ class Game:
         # Avant la boucle, on charge les images nécessaires
         box = pygame.image.load('assets/dialogs/dialog_box.png').convert_alpha()
         box = pygame.transform.scale(box, (330, 182))
-        hp_bar = pygame.image.load('assets/ressources/heart.png').convert_alpha()
-        hp_bar = pygame.transform.scale(hp_bar, (64, 64))
 
         # Boucle du jeu
         while self.running:
@@ -252,6 +263,8 @@ class Game:
             self.update()
             # On centre la caméra sur le joueur et affichage des calques sur la fenêtre d'affichage
             self.map_manager.draw()
+            # Affiche l'interface utilisateur
+            self.ui.display(self.player)
             # Affiche les boites de dialogue
             self.dialog_box.render(self.screen)
             # Met fin aux boites de dialogues ouvertes si le joueur s'éloigne de la source
@@ -259,16 +272,11 @@ class Game:
 
             # Affiche les contôles dans le coin supérieur gauche
             if self.controls_shown:
-
                 self.screen.blit(box, (1590, 10))
                 text_list, pos_list = ["Déplacements : Z, Q, S, D", "Sprint : Shift", "Interactions : E",
                                        "Combat : Clic Gauche", "Masquer commandes : P", "Fermer Jeu : Echap"], \
                                       [(1620, 21), (1620, 46), (1620, 71), (1620, 96), (1620, 121), (1620, 146)]
                 self.draw_text(text_list, pos_list, size=20)
-
-            # Affiche la barre de vie
-            for i in range(self.player.stats["hp"]):
-                self.screen.blit(hp_bar, (i*75+20, 10))
 
             # Actualisation de la fenêtre
             pygame.display.flip()
@@ -278,9 +286,18 @@ class Game:
                 if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                     self.shutting_down()
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    if not self.player.is_attacking:
+                    exhausted_sound_played = True
+                    if not (self.player.is_attacking or self.player.is_exhausted[0]):
                         self.play_sound('punch_sound_effect')
-                    self.player.is_attacking = True
+                        self.player.stamina_depletion(25, False)
+                        self.player.is_attacking = True
+                        exhausted_sound_played = False
+                        self.player.check_exhaustion()
+                    if exhausted_sound_played is False and self.player.is_exhausted[0]:
+                        self.play_sound('exhausted_sound_effect')
+                        # On désactive l'animation d'épuisement si le joueur attaque en se déplaçant
+                        if self.player.position != self.player.old_position:
+                            self.player.is_exhausted[1] = 20
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_p:
                         if self.controls_shown:

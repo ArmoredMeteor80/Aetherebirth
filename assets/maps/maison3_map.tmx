@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="33">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="36">
  <tileset firstgid="1" source="tiled_ressources/tilesets/aurora.tsx"/>
  <layer id="1" name="background" width="20" height="20">
   <data encoding="csv">
@@ -79,8 +79,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,133,133,133,132,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,168,168,167,168,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -103,8 +103,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,133,132,0,0,0,0,0,131,0,0,0,0,0,0,0,
-0,0,0,0,0,168,168,0,0,0,0,0,166,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,131,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,166,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -149,10 +149,9 @@
   <object id="1" name="collision" x="88.5455" y="640" width="485.455" height="48"/>
   <object id="3" name="collision" x="448" y="49.3333" width="53.3333" height="590.667"/>
   <object id="4" name="collision" x="48" y="48" width="46.7727" height="592.75"/>
-  <object id="5" name="collision" x="95.6364" y="153.091" width="9.45455" height="14"/>
   <object id="6" name="collision" x="438.909" y="154.364" width="8.90909" height="12.3636"/>
   <object id="7" name="collision" x="63.4545" y="133.636" width="376.727" height="25.8182"/>
-  <object id="8" name="collision" x="159.875" y="159.25" width="64.25" height="17.125"/>
+  <object id="8" name="collision" x="95.125" y="159.25" width="129" height="17.125"/>
   <object id="9" name="collision" x="383.75" y="159.25" width="32.375" height="16.75"/>
   <object id="10" name="collision" x="95.4545" y="351.818" width="96.5455" height="48.2727"/>
   <object id="11" name="collision" x="192" y="370.545" width="32.0909" height="27.4545"/>
@@ -195,5 +194,7 @@
   <object id="28" name="lutin_blue_path9_1" x="96" y="224" width="16" height="16"/>
   <object id="29" name="lutin_red_path1_1" x="256" y="160" width="16" height="16"/>
   <object id="30" name="lutin_red_path2_1" x="352" y="160" width="16" height="16"/>
+  <object id="33" name="dark_mage_path1_1" x="105" y="160" width="16" height="16"/>
+  <object id="34" name="dark_mage_path2_1" x="220" y="160" width="16" height="16"/>
  </objectgroup>
 </map>

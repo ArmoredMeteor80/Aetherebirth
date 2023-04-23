@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="20">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="22">
  <tileset firstgid="1" source="tiled_ressources/tilesets/aurora.tsx"/>
  <layer id="1" name="background" width="20" height="20">
   <data encoding="csv">
@@ -185,6 +185,13 @@
     <property name="text_1" value="&quot;Vous auriez pu frapper avant d'entrer chez moi....&quot;"/>
     <property name="text_2" value="FÉLICITATIONS !"/>
     <property name="text_3" value="Vous êtes malpoli."/>
+   </properties>
+  </object>
+  <object id="21" name="sign_67" x="444.667" y="509.333" width="35.25" height="70.75">
+   <properties>
+    <property name="text_1" value="Vous trouvez une chaussette sous le lit."/>
+    <property name="text_2" value="Elle est étrangement rigide."/>
+    <property name="text_3" value="Vous la qualifierez de CROUSTILLANTE."/>
    </properties>
   </object>
  </objectgroup>

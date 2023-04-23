@@ -1,10 +1,11 @@
 from dataclasses import dataclass
+
 import pygame
-import pytmx
 import pyscroll
+import pytmx
 
 import game
-from player import Player, NPC
+from entity import NPC
 
 
 @dataclass
@@ -43,7 +44,8 @@ class MapManager:
             Portal(from_world="clairiere_map", origin_point="enter_castle", target_world="castle_map",
                    teleport_point="spawn_castle"),
             Portal(from_world="clairiere_map", origin_point="enter_village1", target_world="village_map",
-                   teleport_point="spawn_village1")])
+                   teleport_point="spawn_village1")
+        ], npcs=[NPC("joffrey_cottain")])
 
         self.register_map("village_map", portals=[
             Portal(from_world="village_map", origin_point="enter_clairiere", target_world="clairiere_map",
@@ -56,43 +58,49 @@ class MapManager:
                    teleport_point="spawn_maison2"),
             Portal(from_world="village_map", origin_point="enter_maison3", target_world="maison3_map",
                    teleport_point="spawn_maison3")
-        ], npcs=[NPC('lutin_pink', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_lime_green', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_purple', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_yellow', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_lime_green', nb_points=1, dialog=["Ce lutin a l'air louche...", "Mieux vaut ne pas l'approcher"],
-                     npc_id=2),
-                 NPC('lutin_cyan', nb_points=1, dialog=[], npc_id=1),
+        ], npcs=[NPC('lutin_pink'),
+                 NPC('lutin_lime_green'),
+                 NPC('lutin_purple'),
+                 NPC('lutin_yellow'),
+                 NPC('lutin_cyan'),
+                 NPC('skeleton', nb_points=4, dialog=["Mhoooooo, ce mini squelette est super trognon..."]),
+                 NPC('cat_white', nb_points=4, dialog=["~~ Meooww ~~"], speed=0.7),
+                 NPC('chicken', nb_points=6, dialog=["Mais c'est quoi ce poulet !?"], speed=0.5),
+                 NPC('chicken', nb_points=26, dialog=["Il est démoniaque ce poulet, ses mouvements sont chaotiques et "
+                                                      "il va si vite !",
+                                                      "Il doit sûrement s'appeler Chicken Run."], speed=3, npc_id=2),
+
+                 NPC('lutin_lime_green', dialog=["Ce lutin a l'air louche...",
+                                                 "Mieux vaut ne pas l'approcher"], npc_id=2),
                  NPC('lutin_green', nb_points=7,
                      dialog=["Salutations !", "Tu ne trouves pas que la STATUE est magnifique ?",
                              "Moi elle m'apaise !", "J'adore cette STATUE !",
                              "Même Bartholdi il en fait pas des comme ça !",
                              "Au moins celle là elle a ses 2 bras... PAS COMME UNE CERTAINE 'VÉNUS' !",
-                             "À bon entendeur..."], npc_id=1),
+                             "À bon entendeur..."]),
                  NPC('lutin_green', nb_points=2, dialog=["1...2...1...2", "Le sport c'est important...",
                                                          "Vous décidez de ne pas le déranger plus longtemps."],
-                     npc_id=2),
+                     npc_id=2, speed=2),
                  NPC('lutin_red', nb_points=10,
                      dialog=["Bienvenue à Châtelard !", "J'espère que tu y passeras un agréable séjour",
                              "Malheureusement pour toi l'accès au château est interdit pour le moment.",
-                             "Coup dur pour le tourisme..."], npc_id=1),
+                             "Coup dur pour le tourisme..."]),
                  NPC('lutin_cyan', nb_points=4, dialog=["Tu n'aurais pas vu mon chat ?", "JEAN PIERRE !",
-                                                        "JEAN PIEEEEEERREEE !", "VIENS ICI JEAN PIEEEEERRE !"],
-                     npc_id=2)])
+                                                        "JEAN PIEEEEEERREEE !",
+                                                        "VIENS ICI JEAN PIEEEEERRE !"], npc_id=2)])
 
         self.register_map("castle_map", portals=[
             Portal(from_world="castle_map", origin_point="enter_clairiere", target_world="clairiere_map",
                    teleport_point="spawn_clairiere1")
-        ], npcs=[NPC('lutin_green', nb_points=9, dialog=["1...2...1...2", "Le sport c'est important...",
-                                                         "Vous décidez de ne pas le déranger plus longtemps"],
-                     npc_id=1),
-                 NPC('lutin_yellow', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_red', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_purple', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_pink', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_lime_green', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_cyan', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_blue', nb_points=1, dialog=[], npc_id=1)])
+        ], npcs=[NPC('lutin_green', nb_points=9, dialog=["1...2...1...2", "Le sport c'est important...", "\
+                                                         Vous décidez de ne pas le déranger plus longtemps"], npc_id=1),
+                 NPC('lutin_yellow'),
+                 NPC('lutin_red'),
+                 NPC('lutin_purple'),
+                 NPC('lutin_pink'),
+                 NPC('lutin_lime_green'),
+                 NPC('lutin_cyan'),
+                 NPC('lutin_blue')])
 
         self.register_map("test_map", portals=[
             Portal(from_world="test_map", origin_point="enter_clairiere", target_world="clairiere_map",
@@ -105,23 +113,25 @@ class MapManager:
         self.register_map("maison2_map", portals=[
             Portal(from_world="maison2_map", origin_point="enter_village3", target_world="village_map",
                    teleport_point="spawn_village5")
-        ], npcs=[NPC('lutin_yellow', nb_points=1, dialog=[], npc_id=1)])
+        ], npcs=[NPC('lutin_yellow')])
 
         self.register_map("maison3_map", portals=[
             Portal(from_world="maison3_map", origin_point="enter_village4", target_world="village_map",
                    teleport_point="spawn_village6")
-        ], npcs=[NPC('lutin_green', nb_points=1, dialog=[], npc_id=1),
-                 NPC('lutin_purple', nb_points=1, dialog=[], npc_id=1),
+        ], npcs=[NPC('dark_mage', nb_points=2, dialog=["Sans savoir pourquoi, vous connaissez le nom de cette "
+                                                       "personne, Branlusque le Solitaire.",
+                                                       "Ce mage noir est en passe de devenir un archimage noir, "
+                                                       "en effet il a 49 ans."]),
+                 NPC('lutin_green'),
+                 NPC('lutin_purple'),
                  NPC('lutin_blue', nb_points=9, dialog=["Du travail.", "ENCORE du travail...", "TROP DE TRAVAIL !",
-                                                        "Repasse plus tard, je suis trop occupé."],
-                     npc_id=1),
+                                                        "Repasse plus tard, je suis trop occupé."]),
                  NPC('lutin_red', nb_points=2, dialog=["Bienvenue dans le bâtiment principal de Châtelard !",
                                                        "Il fait office de bibliothèque, de mairie,"
                                                        " et même de lieu de culte et de cimetière.",
                                                        "Tu y trouvera des tas de choses utile..."
                                                        " Si tu arrives à te concentrer",
-                                                       "malgré EUGÈNE QUI N'ARRÊTE PAS DE COURIR !"],
-                     npc_id=1)])
+                                                       "malgré EUGÈNE QUI N'ARRÊTE PAS DE COURIR !"])])
 
         self.teleport_npcs()
 
@@ -133,9 +143,9 @@ class MapManager:
                 dialog_box.execute(sprite.dialog)
         # Dialogues avec Panneaux
         try:
-            for k in self.get_sign_collision().keys():
-                if self.player.rect.colliderect(self.get_sign_collision()[k][0]):
-                    dialog_box.execute(self.get_sign_collision()[k][1])
+            for key in self.get_sign_collision().keys():
+                if self.player.rect.colliderect(self.get_sign_collision()[key][0]):
+                    dialog_box.execute(self.get_sign_collision()[key][1])
         except:
             None
 
@@ -164,10 +174,10 @@ class MapManager:
         for sprite in self.get_group().sprites():
 
             if type(sprite) is NPC:
-                if sprite.rect.inflate(20, 20).colliderect(self.player.rect):
+                if sprite.rect.inflate(10, 10).colliderect(self.player.rect):
                     sprite.speed = 0
                 else:
-                    sprite.speed = 1
+                    sprite.speed = sprite.default_speed
                 if sprite.feet.inflate(-2, -2).colliderect(self.player.feet):
                     sprite.speed = 0
                     self.player.move_back()
@@ -270,7 +280,7 @@ class MapManager:
     def draw(self):
         """Dessine la carte et les sprites"""
         # On trie les sprites par ordre croissant de leur coordonnée y
-        sprites = sorted(self.get_group().sprites(), key=lambda sprite: sprite.rect.y)
+        sprites = sorted(self.get_group().sprites(), key=lambda sprite: sprite.feet.y)
 
         # On parcourt la liste triée, on baisse le layer des sprites si le joueur se trouve en dessous des sprites
         # à l'inverse, on augmente le layer s'il est au-dessus
@@ -294,4 +304,4 @@ class MapManager:
         self.check_collisions()
 
         for npc in self.get_map().npcs:
-            npc.move()
+            npc.move(self.player)

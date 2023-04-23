@@ -72,5 +72,5 @@ class DialogBox:
             # affiche le texte suivant
             self.reading = True
         else:
-            # ferme la boîte de dialogue si le texte est terminé
+            # Ferme la boîte de dialogue si le texte est terminé
             self.reading = False
