@@ -140,7 +140,7 @@ class Entity(AnimateSprite):
             self.attack_cooldown = 0
 
     def update(self):
-        """Met à jour la position du joueur"""
+        """Met à jour la position de l'entité"""
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
 
@@ -172,6 +172,15 @@ class Player(Entity):
                 self.stamina -= deplet_rate
         else:
             self.stamina -= deplet_rate
+
+    def health_regen(self, regen_rate):
+        """Régénération de la vie"""
+        if self.health < self.stats['health']:
+            self.health += regen_rate
+
+    def health_depletion(self, deplet_rate):
+        """Epuisement de la vie"""
+        self.health -= deplet_rate
 
     def check_exhaustion(self):
         """Change le statut d'épuisement du joueur"""
@@ -238,10 +247,11 @@ class NPC(Entity):
             self.points.append(rect)
 
 
-class Enemy(Entity):
+class Enemy(NPC):
     """Classe des ennemis héritant de la Classe Entity"""
-    def __init__(self, name, health, attack_damage, resistance, attack_radius, notice_radius):
-        super().__init__(name, 0, 0)
+    def __init__(self, name, health, attack_damage, resistance, attack_radius, notice_radius, cooldown_time=30,
+                 nb_points=1):
+        super().__init__(name)
         self.hitbox = self.rect.inflate(0, 10)
         self.health = health
         self.attack_damage = attack_damage
@@ -249,10 +259,39 @@ class Enemy(Entity):
         self.attack_radius = attack_radius
         self.notice_radius = notice_radius
         self.status = 'idle'
+        self.direction = pygame.math.Vector2()
+        self.cooldown_time = cooldown_time
+        self.nb_points = nb_points
+        self.pathing = False
+
+    def get_player_distance_direction(self, player):
+        """Renvoie la distance et la direction entre le joueur et l'ennemi"""
+        enemy_vec = pygame.math.Vector2(self.rect.center)
+        player_vec = pygame.math.Vector2(player.rect.center)
+        distance = (player_vec - enemy_vec).magnitude()
+
+        if distance > 0:
+            direction = (player_vec - enemy_vec).normalize()
+        else:
+            direction = pygame.math.Vector2()
+        return distance, direction
+
+    def get_current_point_distance_direction(self):
+        """Renvoie la distance et la direction entre le point de passage et l'ennemi"""
+        enemy_vec = pygame.math.Vector2(self.rect.center)
+
+        first_point_vec = pygame.math.Vector2(self.points[self.current_point].bottomright)
+        distance = (first_point_vec - enemy_vec).magnitude()
+
+        if distance > 0:
+            direction = (first_point_vec - enemy_vec).normalize()
+        else:
+            direction = pygame.math.Vector2()
+        return distance, direction
 
     def get_status(self, player):
         """Regarde où est le joueur"""
-        distance = 1
+        distance = self.get_player_distance_direction(player)[0]
 
         if distance <= self.attack_radius:
             self.status = 'attack'
@@ -260,3 +299,64 @@ class Enemy(Entity):
             self.status = 'move'
         else:
             self.status = 'idle'
+
+    def actions(self, player):
+        """Définis les actions selon le statut"""
+        if self.status == "attack":
+            self.attack_cooldown += 1
+            if self.attack_cooldown == self.cooldown_time:
+                self.attack_cooldown = 0
+                player.health_depletion(self.attack_damage)
+
+        elif self.status == "move":
+            self.pathing = False
+            self.direction = self.get_player_distance_direction(player)[1]
+
+        else:
+            if not self.pathing:
+                self.direction = self.get_current_point_distance_direction()[1]
+
+    def enemy_update(self, player):
+        """Met à jour les ennemis"""
+        self.get_status(player)
+        self.actions(player)
+
+    def move_enemy(self, player):
+        """Déplace l'ennemi"""
+        if self.direction.magnitude() != 0:
+            self.direction = self.direction.normalize()
+        self.position[0] += self.direction.x * self.speed
+        self.position[1] += self.direction.y * self.speed
+
+        x_diff = player.position[0] - self.position[0]
+        y_diff = player.position[1] - self.position[1]
+        distance = (x_diff ** 2 + y_diff ** 2) ** 0.5
+        if distance <= self.notice_radius:
+            if abs(x_diff) > abs(y_diff):
+                if x_diff > 0:
+                    self.change_animation("right")
+                else:
+                    self.change_animation("left")
+            else:
+                if y_diff > 0:
+                    self.change_animation("down")
+                else:
+                    self.change_animation("up")
+        else:
+            x_diff = self.points[self.current_point][0] - self.position[0]
+            y_diff = self.points[self.current_point][1] - self.position[1]
+            if abs(x_diff) > abs(y_diff):
+                if x_diff > 0:
+                    self.change_animation("right")
+                else:
+                    self.change_animation("left")
+            else:
+                if y_diff > 0:
+                    self.change_animation("down")
+                else:
+                    self.change_animation("up")
+            if not self.pathing:
+                if self.get_current_point_distance_direction()[0] == 0:
+                    self.pathing = True
+            else:
+                self.move(player)

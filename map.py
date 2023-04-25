@@ -5,7 +5,7 @@ import pyscroll
 import pytmx
 
 import game
-from entity import NPC
+from entity import NPC, Enemy
 
 
 @dataclass
@@ -27,6 +27,7 @@ class Map:
     tmx_data: pytmx.TiledMap
     portals: list[Portal]
     npcs: list[NPC]
+    enemies: list[Enemy]
 
 
 class MapManager:
@@ -45,7 +46,8 @@ class MapManager:
                    teleport_point="spawn_castle"),
             Portal(from_world="clairiere_map", origin_point="enter_village1", target_world="village_map",
                    teleport_point="spawn_village1")
-        ], npcs=[NPC("joffrey_cottain")])
+        ], npcs=[NPC("joffrey_cottain")], enemies=[Enemy("blue_blob", health=100, attack_damage=10, resistance=10,
+                                                         attack_radius=30, notice_radius=150, nb_points=4)])
 
         self.register_map("village_map", portals=[
             Portal(from_world="village_map", origin_point="enter_clairiere", target_world="clairiere_map",
@@ -133,7 +135,7 @@ class MapManager:
                                                        " Si tu arrives à te concentrer",
                                                        "malgré EUGÈNE QUI N'ARRÊTE PAS DE COURIR !"])])
 
-        self.teleport_npcs()
+        self.teleport_npcs_enemies()
 
     def check_dialog_collisions(self, dialog_box):
         """Détecte les collisions avec les PNJ et les Panneaux"""
@@ -184,6 +186,17 @@ class MapManager:
             if sprite.feet.collidelist(self.get_collision()) > -1:
                 sprite.move_back()
 
+            elif type(sprite) is Enemy:
+                if sprite.rect.inflate(-15, -15).colliderect(self.player.rect):
+                    sprite.speed = 0
+                else:
+                    sprite.speed = sprite.default_speed
+                if sprite.feet.colliderect(self.player.feet):
+                    sprite.speed = 0
+                    self.player.move_back()
+            if sprite.feet.collidelist(self.get_collision()) > -1:
+                sprite.move_back()
+
     def fade_out(self, color, speed):
         """Filtre de fondu inverse"""
         fade = pygame.Surface(self.screen.get_size()).convert_alpha()
@@ -211,7 +224,7 @@ class MapManager:
         self.player.position[1] = point.y
         self.player.save_location()
 
-    def register_map(self, name, portals=(), npcs=()):
+    def register_map(self, name, portals=(), npcs=(), enemies=()):
         """Charge les différentes cartes"""
         # Charge la carte tmx en créant un objet "TiledMap" contenant les calques, objets et images d'une carte .tmx
         tmx_data = pytmx.util_pygame.load_pygame(f"assets/maps/{name}.tmx")
@@ -243,8 +256,11 @@ class MapManager:
         for npc in npcs:
             group.add(npc)
 
+        for enemy in enemies:
+            group.add(enemy)
+
         # Création d'un objet Map qu'on injecte dans le dictionnaire les repertoriant
-        self.maps[name] = Map(name, collision, sign_texts, group, tmx_data, portals, npcs)
+        self.maps[name] = Map(name, collision, sign_texts, group, tmx_data, portals, npcs, enemies)
 
     # Accesseurs (getters)
     def get_map(self):
@@ -267,15 +283,19 @@ class MapManager:
         """Renvoie l'objet demandé"""
         return self.get_map().tmx_data.get_object_by_name(name)
 
-    def teleport_npcs(self):
+    def teleport_npcs_enemies(self):
         """Teleporte les PNJ"""
         for map in self.maps:
             map_data = self.maps[map]
             npcs = map_data.npcs
+            enemies = map_data.enemies
 
             for npc in npcs:
                 npc.load_points(map_data.tmx_data)
                 npc.teleport_spawn()
+            for enemy in enemies:
+                enemy.load_points(map_data.tmx_data)
+                enemy.teleport_spawn()
 
     def draw(self):
         """Dessine la carte et les sprites"""
@@ -298,10 +318,14 @@ class MapManager:
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.rect.center)
 
-    def update(self):
+    def update(self, player):
         """Actualise le groupe"""
         self.get_group().update()
         self.check_collisions()
 
         for npc in self.get_map().npcs:
             npc.move(self.player)
+
+        for enemy in self.get_map().enemies:
+            enemy.enemy_update(player)
+            enemy.move_enemy(player)

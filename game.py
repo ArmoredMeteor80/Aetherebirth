@@ -79,18 +79,22 @@ class Game:
                 self.player.is_exhausted[0] = True
                 self.play_sound('exhausted_sound_effect')
             if self.player.position == self.player.old_position:
+                # Régénération passive de vie et d'endurance
                 self.player.stamina_regen(0.2)
+                self.player.health_regen(1/180)
             else:
                 self.player.stamina_depletion(0.2)
         else:
             self.player.is_running = False
             self.player.speed = 2
+            # Régénération passive de vie et d'endurance
             self.player.stamina_regen(0.2)
+            self.player.health_regen(1 / 180)
             self.player.check_exhaustion()
 
     def update(self):
         """Actualise le groupe"""
-        self.map_manager.update()
+        self.map_manager.update(self.player)
 
     def shutting_down(self):
         """Ferme et sauvegarde les données du jeu"""

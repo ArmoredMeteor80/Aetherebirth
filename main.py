@@ -14,7 +14,8 @@ if __name__ == '__main__':
     # On affiche le menu et récupérons le choix de l'utilisateur quant à la progression de sa partie
     new_game_or_continue = game.run()
 
-    # Si le joueur a choisi "Nouvelle partie".
+    # Si le joueur a choisi "Nouvelle partie"..
+
     if new_game_or_continue == "new_game":
         # On supprime tous les fichiers de sauvegarde
         for filename in os.listdir("save_data"):

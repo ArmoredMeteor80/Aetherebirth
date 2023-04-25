@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="214">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="220">
  <tileset firstgid="1" source="tiled_ressources/tilesets/grass.tsx"/>
  <tileset firstgid="81" source="tiled_ressources/tilesets/props.tsx"/>
  <tileset firstgid="337" source="tiled_ressources/tilesets/shadow.tsx"/>
@@ -497,6 +497,10 @@
     <property name="text_3" value="Ho d'ailleurs ! N'hésite pas à tenter d'interagir avec à peu près tout, tiens par exemple, approche toi de la statue en haut des escaliers et tente d'intéragir avec !"/>
    </properties>
   </object>
+  <object id="215" name="blue_blob_path1_1" x="1568" y="736" width="16" height="16"/>
+  <object id="217" name="blue_blob_path2_1" x="1568" y="864" width="16" height="16"/>
+  <object id="218" name="blue_blob_path3_1" x="1408" y="864" width="16" height="16"/>
+  <object id="219" name="blue_blob_path4_1" x="1408" y="736" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="7" name="NPCPath"/>
 </map>
