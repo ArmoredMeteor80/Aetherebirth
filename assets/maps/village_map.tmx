@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="305">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="309">
  <tileset firstgid="1" source="tiled_ressources/tilesets/grass.tsx"/>
  <tileset firstgid="81" source="tiled_ressources/tilesets/props.tsx"/>
  <tileset firstgid="337" source="tiled_ressources/tilesets/shadow.tsx"/>
@@ -621,8 +621,8 @@
   <object id="230" name="lutin_lime_green_path1_1" x="64" y="288" width="16" height="16"/>
   <object id="234" name="lutin_green_path1_2" x="1024" y="320" width="16" height="16"/>
   <object id="235" name="lutin_green_path2_2" x="1024" y="388" width="16" height="16"/>
-  <object id="237" name="lutin_lime_green_path1_2" x="160" y="544" width="16" height="16"/>
-  <object id="239" name="lutin_lime_green_path2_2" x="288" y="544" width="16" height="16"/>
+  <object id="237" name="lutin_lime_green_path1_2" x="160" y="536" width="16" height="16"/>
+  <object id="239" name="lutin_lime_green_path2_2" x="288" y="536" width="16" height="16"/>
   <object id="241" name="lutin_cyan_path1_2" x="608" y="480" width="16" height="16"/>
   <object id="242" name="lutin_cyan_path2_2" x="832" y="480" width="16" height="16"/>
   <object id="243" name="lutin_cyan_path3_2" x="832" y="544" width="16" height="16"/>
@@ -667,5 +667,7 @@
   <object id="289" name="skeleton_path2_1" x="256" y="0" width="16" height="16"/>
   <object id="290" name="skeleton_path3_1" x="256" y="128" width="16" height="16"/>
   <object id="291" name="skeleton_path4_1" x="128" y="128" width="16" height="16"/>
+  <object id="307" name="lutin_lime_green_path3_2" x="288" y="416" width="16" height="16"/>
+  <object id="308" name="lutin_lime_green_path4_2" x="160" y="416" width="16" height="16"/>
  </objectgroup>
 </map>

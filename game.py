@@ -20,12 +20,12 @@ class Game:
             # Création d'un objet "SaveLoadSystem" gérant le système de sauvegarde et de chargement
             self.saveloadmanager = SaveLoadSystem(".save", "save_data")
             # Chargement des données sauvegardées
-            player_position, current_map, controls_shown = self.saveloadmanager.load_game_data(
-                ["player_position", "current_map", "controls_shown"],
-                [(1568, 352), "clairiere_map", True])
+            player_position, current_map, controls_shown, player_health = self.saveloadmanager.load_game_data(
+                ["player_position", "current_map", "controls_shown", "player_health"],
+                [(1568, 352), "clairiere_map", True, 100])
 
             # Génération d'un joueur
-            self.player = Player(player_position)
+            self.player = Player(player_position, player_health)
             self.map_manager = MapManager(self.screen, self.player, current_map)
             self.dialog_box = DialogBox()
             self.controls_shown = controls_shown
@@ -71,6 +71,8 @@ class Game:
             self.player.change_animation('still')
             self.player.attack_cooldown = 0
 
+        # Régénération passive du joueur
+        self.player.health_regen(1 / 180)
         # Course du joueur
         if pressed[pygame.K_LSHIFT] and not self.player.is_exhausted[0]:
             self.player.is_running = True
@@ -81,7 +83,6 @@ class Game:
             if self.player.position == self.player.old_position:
                 # Régénération passive de vie et d'endurance
                 self.player.stamina_regen(0.2)
-                self.player.health_regen(1/180)
             else:
                 self.player.stamina_depletion(0.2)
         else:
@@ -89,7 +90,6 @@ class Game:
             self.player.speed = 2
             # Régénération passive de vie et d'endurance
             self.player.stamina_regen(0.2)
-            self.player.health_regen(1 / 180)
             self.player.check_exhaustion()
 
     def update(self):
@@ -101,8 +101,8 @@ class Game:
         if self.is_starting_menu_over:
             # Sauvegarde toutes les données du jeu que l'on veut récupérer lors du prochain chargement
             self.saveloadmanager.save_game_data(
-                [self.player.position, self.map_manager.current_map, self.controls_shown],
-                ["player_position", "current_map", "controls_shown"])
+                [self.player.position, self.map_manager.current_map, self.controls_shown, self.player.health],
+                ["player_position", "current_map", "controls_shown", "player_health"])
         pygame.mixer.music.fadeout(1500)
         self.fade_in((0, 0, 0), 2)
         self.running = False

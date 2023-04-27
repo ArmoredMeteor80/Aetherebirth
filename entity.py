@@ -154,10 +154,10 @@ class Entity(AnimateSprite):
 class Player(Entity):
     """Classe d'un joueur héritant de la Classe Entity"""
 
-    def __init__(self, position):
+    def __init__(self, position, player_health):
         super().__init__("bob", position[0], position[1])
         self.stats = {"health": 100, "stamina": 100}
-        self.health = self.stats['health']
+        self.health = player_health
         self.stamina = self.stats['stamina']
 
     def stamina_regen(self, regen_rate):
@@ -276,15 +276,15 @@ class Enemy(NPC):
             direction = pygame.math.Vector2()
         return distance, direction
 
-    def get_current_point_distance_direction(self):
+    def get_point_distance_direction(self):
         """Renvoie la distance et la direction entre le point de passage et l'ennemi"""
         enemy_vec = pygame.math.Vector2(self.rect.center)
 
-        first_point_vec = pygame.math.Vector2(self.points[self.current_point].bottomright)
-        distance = (first_point_vec - enemy_vec).magnitude()
+        current_point_vec = pygame.math.Vector2(self.points[self.current_point].bottomright)
+        distance = (current_point_vec - enemy_vec).magnitude()
 
         if distance > 0:
-            direction = (first_point_vec - enemy_vec).normalize()
+            direction = (current_point_vec - enemy_vec).normalize()
         else:
             direction = pygame.math.Vector2()
         return distance, direction
@@ -314,7 +314,7 @@ class Enemy(NPC):
 
         else:
             if not self.pathing:
-                self.direction = self.get_current_point_distance_direction()[1]
+                self.direction = self.get_point_distance_direction()[1]
 
     def enemy_update(self, player):
         """Met à jour les ennemis"""
@@ -356,7 +356,7 @@ class Enemy(NPC):
                 else:
                     self.change_animation("up")
             if not self.pathing:
-                if self.get_current_point_distance_direction()[0] == 0:
+                if self.get_point_distance_direction()[0] == 0:
                     self.pathing = True
             else:
                 self.move(player)

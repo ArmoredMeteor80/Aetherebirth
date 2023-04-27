@@ -71,6 +71,17 @@ class AnimateSprite(pygame.sprite.Sprite):
                 "still_npc_right": (self.get_images(64, 0, 3), 2),
                 "still_npc_left": (self.get_images(96, 0, 3), 3)
             }
+        elif "lutin" in name:
+            self.images = {
+                "down": (self.get_images(0, 0, 3), 0),
+                "up": (self.get_images(32, 0, 3), 1),
+                "right": (self.get_images(64, 0, 3), 2),
+                "left": (self.get_images(96, 0, 3), 3),
+                "still_npc_down": (self.get_images(0, 1, 1), 0),
+                "still_npc_up": (self.get_images(32, 1, 1), 1),
+                "still_npc_right": (self.get_images(64, 1, 1), 2),
+                "still_npc_left": (self.get_images(96, 1, 1), 3)
+            }
         else:
             self.images = {
                 "down": (self.get_images(0, 0, 0), 0),
@@ -86,6 +97,10 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.attack_animation_index = 0
         self.exhaust_animation_index = 0
         self.clock = 0
+        if name == "bob":
+            self.clock_speed = 6
+        else:
+            self.clock_speed = 10
         self.attack_clock = 0
         self.exhaust_clock = 0
         # Horloge permettant de cadencer le temps durant lequel on peut continuer un combo
@@ -129,9 +144,9 @@ class AnimateSprite(pygame.sprite.Sprite):
 
                 # On évite que l'animation soit trop lente
                 if self.speed < 1 and name != 'still':
-                    self.clock += 6
+                    self.clock += self.clock_speed
                 else:
-                    self.clock += self.speed * 6
+                    self.clock += self.speed * self.clock_speed
 
                 # On cadence l'animation
                 if self.clock >= 100:

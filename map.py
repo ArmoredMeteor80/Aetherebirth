@@ -72,8 +72,8 @@ class MapManager:
                                                       "il va si vite !",
                                                       "Il doit sûrement s'appeler Chicken Run."], speed=3, npc_id=2),
 
-                 NPC('lutin_lime_green', dialog=["Ce lutin a l'air louche...",
-                                                 "Mieux vaut ne pas l'approcher"], npc_id=2),
+                 NPC('lutin_lime_green', nb_points=4, dialog=["Ce lutin a l'air louche...",
+                                                              "Mieux vaut ne pas l'approcher"], npc_id=2),
                  NPC('lutin_green', nb_points=7,
                      dialog=["Salutations !", "Tu ne trouves pas que la STATUE est magnifique ?",
                              "Moi elle m'apaise !", "J'adore cette STATUE !",
@@ -91,7 +91,7 @@ class MapManager:
                                                         "JEAN PIEEEEEERREEE !",
                                                         "VIENS ICI JEAN PIEEEEERRE !"], npc_id=2)])
 
-        self.register_map("castle_map", portals=[
+        self.register_map("castle_map_test", portals=[
             Portal(from_world="castle_map", origin_point="enter_clairiere", target_world="clairiere_map",
                    teleport_point="spawn_clairiere1")
         ], npcs=[NPC('lutin_green', nb_points=9, dialog=["1...2...1...2", "Le sport c'est important...", "\
@@ -103,6 +103,10 @@ class MapManager:
                  NPC('lutin_lime_green'),
                  NPC('lutin_cyan'),
                  NPC('lutin_blue')])
+
+        self.register_map("castle_map", portals=[
+            Portal(from_world="castle_map", origin_point="enter_village5", target_world="village_map",
+                   teleport_point="spawn_village2")])
 
         self.register_map("test_map", portals=[
             Portal(from_world="test_map", origin_point="enter_clairiere", target_world="clairiere_map",
