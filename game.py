@@ -311,6 +311,11 @@ class Game:
                     if event.key == pygame.K_e:
                         self.map_manager.check_dialog_collisions(self.dialog_box)
 
+            # Si le joueur décède
+            if self.player.health <= 0:
+                self.player.health = 100
+                self.shutting_down()
+
             # Animation de démarrage du jeu
             if not is_booted:
                 self.booting_animation()

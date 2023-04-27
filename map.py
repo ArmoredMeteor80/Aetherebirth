@@ -42,12 +42,9 @@ class MapManager:
 
         # Chargement des cartes
         self.register_map("clairiere_map", portals=[
-            Portal(from_world="clairiere_map", origin_point="enter_castle", target_world="castle_map",
-                   teleport_point="spawn_castle"),
             Portal(from_world="clairiere_map", origin_point="enter_village1", target_world="village_map",
                    teleport_point="spawn_village1")
-        ], npcs=[NPC("joffrey_cottain")], enemies=[Enemy("blue_blob", health=100, attack_damage=10, resistance=10,
-                                                         attack_radius=30, notice_radius=150, nb_points=4)])
+        ], npcs=[NPC("joffrey_cottain")])
 
         self.register_map("village_map", portals=[
             Portal(from_world="village_map", origin_point="enter_clairiere", target_world="clairiere_map",
@@ -91,26 +88,13 @@ class MapManager:
                                                         "JEAN PIEEEEEERREEE !",
                                                         "VIENS ICI JEAN PIEEEEERRE !"], npc_id=2)])
 
-        self.register_map("castle_map_test", portals=[
-            Portal(from_world="castle_map", origin_point="enter_clairiere", target_world="clairiere_map",
-                   teleport_point="spawn_clairiere1")
-        ], npcs=[NPC('lutin_green', nb_points=9, dialog=["1...2...1...2", "Le sport c'est important...", "\
-                                                         Vous décidez de ne pas le déranger plus longtemps"], npc_id=1),
-                 NPC('lutin_yellow'),
-                 NPC('lutin_red'),
-                 NPC('lutin_purple'),
-                 NPC('lutin_pink'),
-                 NPC('lutin_lime_green'),
-                 NPC('lutin_cyan'),
-                 NPC('lutin_blue')])
-
         self.register_map("castle_map", portals=[
             Portal(from_world="castle_map", origin_point="enter_village5", target_world="village_map",
-                   teleport_point="spawn_village2")])
-
-        self.register_map("test_map", portals=[
-            Portal(from_world="test_map", origin_point="enter_clairiere", target_world="clairiere_map",
-                   teleport_point="spawn_clairiere2")])
+                   teleport_point="spawn_village2")], enemies=[Enemy("blue_blob", health=100, attack_damage=10,
+                                                                     attack_radius=30, notice_radius=130, nb_points=6),
+                                                               Enemy(name="blue_blob", health=100, attack_damage=10,
+                                                                     attack_radius=30, notice_radius=130, nb_points=4,
+                                                                     npc_id=2)])
 
         self.register_map("maison1_map", portals=[
             Portal(from_world="maison1_map", origin_point="enter_village2", target_world="village_map",
@@ -293,7 +277,7 @@ class MapManager:
             map_data = self.maps[map]
             npcs = map_data.npcs
             enemies = map_data.enemies
-
+            print(map)
             for npc in npcs:
                 npc.load_points(map_data.tmx_data)
                 npc.teleport_spawn()
@@ -331,5 +315,7 @@ class MapManager:
             npc.move(self.player)
 
         for enemy in self.get_map().enemies:
+            if enemy.status == "dead":
+                self.get_group().remove(enemy)
             enemy.enemy_update(player)
             enemy.move_enemy(player)

@@ -156,9 +156,10 @@ class Player(Entity):
 
     def __init__(self, position, player_health):
         super().__init__("bob", position[0], position[1])
-        self.stats = {"health": 100, "stamina": 100}
+        self.stats = {"health": 100, "stamina": 100, "attack_damage" : 25}
         self.health = player_health
         self.stamina = self.stats['stamina']
+        self.attack_damage = self.stats['attack_damage']
 
     def stamina_regen(self, regen_rate):
         """Régénération passive/active d'endurance"""
@@ -249,13 +250,12 @@ class NPC(Entity):
 
 class Enemy(NPC):
     """Classe des ennemis héritant de la Classe Entity"""
-    def __init__(self, name, health, attack_damage, resistance, attack_radius, notice_radius, cooldown_time=30,
+    def __init__(self, name, health, attack_damage, attack_radius, notice_radius, npc_id=1, cooldown_time=30,
                  nb_points=1):
         super().__init__(name)
         self.hitbox = self.rect.inflate(0, 10)
         self.health = health
         self.attack_damage = attack_damage
-        self.resistance = resistance
         self.attack_radius = attack_radius
         self.notice_radius = notice_radius
         self.status = 'idle'
@@ -263,6 +263,8 @@ class Enemy(NPC):
         self.cooldown_time = cooldown_time
         self.nb_points = nb_points
         self.pathing = False
+        self.is_attacked = False
+        self.id = npc_id
 
     def get_player_distance_direction(self, player):
         """Renvoie la distance et la direction entre le joueur et l'ennemi"""
@@ -292,13 +294,20 @@ class Enemy(NPC):
     def get_status(self, player):
         """Regarde où est le joueur"""
         distance = self.get_player_distance_direction(player)[0]
-
-        if distance <= self.attack_radius:
+        if self.health <= 0:
+            self.status = 'dead'
+        elif distance <= self.attack_radius:
             self.status = 'attack'
         elif distance <= self.notice_radius:
             self.status = 'move'
         else:
             self.status = 'idle'
+
+        if not player.is_attacking:
+            self.is_attacked = False
+        if distance <= self.attack_radius+10 and player.is_attacking and not self.is_attacked:
+            self.is_attacked = True
+            self.health -= player.attack_damage
 
     def actions(self, player):
         """Définis les actions selon le statut"""

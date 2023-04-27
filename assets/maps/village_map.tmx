@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="309">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="310">
  <tileset firstgid="1" source="tiled_ressources/tilesets/grass.tsx"/>
  <tileset firstgid="81" source="tiled_ressources/tilesets/props.tsx"/>
  <tileset firstgid="337" source="tiled_ressources/tilesets/shadow.tsx"/>
@@ -595,6 +595,12 @@
   <object id="302" name="collision" x="1263.67" y="298.941" width="127.455" height="50.352"/>
   <object id="303" name="collision" x="1002.02" y="189.036" width="140" height="51"/>
   <object id="304" name="collision" x="1007.69" y="138.828" width="127.455" height="50.352"/>
+  <object id="309" name="sign_80" x="509.636" y="255.182" width="39.1819" height="67.3636">
+   <properties>
+    <property name="text_1" value="Dans la dureté de la pierre est inscrit un message : &quot;Non aux gens qui s'énervent man !&quot;"/>
+    <property name="text_2" value="Ce message vous laisse dubitatif..."/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="8" name="NPCPath">
   <object id="197" name="lutin_pink_path1_1" x="768" y="160" width="16" height="16"/>
