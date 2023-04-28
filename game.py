@@ -106,6 +106,7 @@ class Game:
         pygame.mixer.music.fadeout(1500)
         self.fade_in((0, 0, 0), 2)
         self.running = False
+        pygame.quit()
 
     def fade_in(self, color, speed):
         """Filtre de fondu"""
@@ -211,6 +212,8 @@ class Game:
 
                 # On dessine les boutons
                 pygame.draw.rect(self.screen, (61, 34, 20), new_game_button_rect)
+                if not os.path.exists("save_data"):
+                    os.makedirs("save_data")
                 # S'il n'y a pas de fichiers de sauvegarde, le bouton "continue" est grisé et inopérant
                 if len(os.listdir("save_data")) == 0:
                     pygame.draw.rect(self.screen, (109, 82, 81), continue_button_rect)
