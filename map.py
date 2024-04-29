@@ -5,7 +5,7 @@ import pyscroll
 import pytmx
 
 import game
-from entity import NPC, Enemy
+from entity import NPC, Enemy, Player
 
 
 @dataclass
@@ -33,7 +33,7 @@ class Map:
 class MapManager:
     """Gère la dynamique de carte"""
 
-    def __init__(self, screen, player, current_map):
+    def __init__(self, screen, player: Player, current_map):
         # stockage des cartes dans un dictionnaire sous forme "castle" -> Map("castle", walls, group)
         self.maps = dict()
         self.screen = screen
