@@ -1,6 +1,9 @@
 import socket
 import pickle
 
+from ..entity import Player
+from ..map import MapManager
+
 class Network:
     def __init__(self):
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -9,6 +12,22 @@ class Network:
         self.addr = (self.server, self.port)
         self.player = self.connect()
         print(self.player)
+
+    def sendData(self, player: Player, map_manager: MapManager):
+        self.send({
+            "position": {
+                "map": map_manager.current_map,
+                "x": player.position[0],
+                "y": player.position[1],
+            },
+            "name": player.player_name,
+            "stats": player.stats,
+            "actions": {
+                "is_running": player.is_running,
+                "is_exhausted": player.is_exhausted,
+                "is_attacking": player.is_attacking
+            }
+        })
 
     def getPlayer(self):
         return self.player

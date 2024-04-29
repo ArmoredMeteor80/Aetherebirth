@@ -51,7 +51,7 @@ class Game:
         self.is_starting_menu_over = is_starting_menu_over
 
     def send_network_data(self):
-        self.network.send(self.player.position)
+        self.network.sendData(self.player, self.map_manager)
 
     def handle_imput(self):
         """Permet la gestion de toutes les entrées"""

@@ -1,16 +1,18 @@
 
 from ..ui import AnimateSprite
 from . import Entity
+import os
 
 class Player(Entity):
     """Classe d'un joueur héritant de la Classe Entity"""
 
-    def __init__(self, position, player_health: int=100):
+    def __init__(self, position, player_health: int=100, player_name: str = f"Player_{os.urandom(5)}"):
         super().__init__("bob", position[0], position[1])
         self.stats = {"health": 100, "stamina": 100, "attack_damage" : 25}
         self.health = player_health
         self.stamina = self.stats['stamina']
         self.attack_damage = self.stats['attack_damage']
+        self.player_name = player_name
 
     def stamina_regen(self, regen_rate):
         """Régénération passive/active d'endurance"""
