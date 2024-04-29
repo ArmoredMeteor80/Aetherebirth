@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List, Tuple
 
 import pygame
 import pyscroll
@@ -212,7 +213,7 @@ class MapManager:
         self.player.position[1] = point.y
         self.player.save_location()
 
-    def register_map(self, name, portals=(), npcs=(), enemies=()):
+    def register_map(self, name, portals:List[Portal]=[], npcs:List[NPC]=[], enemies:List=[]):
         """Charge les différentes cartes"""
         # Charge la carte tmx en créant un objet "TiledMap" contenant les calques, objets et images d'une carte .tmx
         tmx_data = pytmx.util_pygame.load_pygame(f"assets/maps/{name}.tmx")
