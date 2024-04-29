@@ -154,7 +154,7 @@ class Entity(AnimateSprite):
 class Player(Entity):
     """Classe d'un joueur héritant de la Classe Entity"""
 
-    def __init__(self, position, player_health):
+    def __init__(self, position, player_health: int):
         super().__init__("bob", position[0], position[1])
         self.stats = {"health": 100, "stamina": 100, "attack_damage" : 25}
         self.health = player_health
@@ -195,10 +195,8 @@ class Player(Entity):
 class NPC(Entity):
     """Classe des PNJ héritant de la Classe Entity"""
 
-    def __init__(self, name, nb_points=1, dialog=None, npc_id=1, speed=1):
+    def __init__(self, name:str, nb_points:int=1, dialog:list[str]=[], npc_id:int=1, speed:float=1):
         super().__init__(name, 0, 0)
-        if dialog is None:
-            dialog = []
         self.nb_points = nb_points
         self.dialog = dialog
         self.points = []
@@ -208,7 +206,7 @@ class NPC(Entity):
         self.current_point = 0
         self.id = npc_id
 
-    def move(self, player):
+    def move(self, player: Player):
         """Déplace le PNJ"""
         if self.nb_points == 1 or self.speed == 0:
             self.stay_still(player)
@@ -266,7 +264,7 @@ class Enemy(NPC):
         self.is_attacked = False
         self.id = npc_id
 
-    def get_player_distance_direction(self, player):
+    def get_player_distance_direction(self, player: Player):
         """Renvoie la distance et la direction entre le joueur et l'ennemi"""
         enemy_vec = pygame.math.Vector2(self.rect.center)
         player_vec = pygame.math.Vector2(player.rect.center)
@@ -291,7 +289,7 @@ class Enemy(NPC):
             direction = pygame.math.Vector2()
         return distance, direction
 
-    def get_status(self, player):
+    def get_status(self, player: Player):
         """Regarde où est le joueur"""
         distance = self.get_player_distance_direction(player)[0]
         if self.health <= 0:
@@ -309,7 +307,7 @@ class Enemy(NPC):
             self.is_attacked = True
             self.health -= player.attack_damage
 
-    def actions(self, player):
+    def actions(self, player: Player):
         """Définis les actions selon le statut"""
         if self.status == "attack":
             self.attack_cooldown += 1
@@ -325,12 +323,12 @@ class Enemy(NPC):
             if not self.pathing:
                 self.direction = self.get_point_distance_direction()[1]
 
-    def enemy_update(self, player):
+    def enemy_update(self, player: Player):
         """Met à jour les ennemis"""
         self.get_status(player)
         self.actions(player)
 
-    def move_enemy(self, player):
+    def move_enemy(self, player: Player):
         """Déplace l'ennemi"""
         if self.direction.magnitude() != 0:
             self.direction = self.direction.normalize()
