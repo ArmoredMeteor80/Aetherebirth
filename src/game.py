@@ -10,6 +10,7 @@ from .entity import Player
 from .ui import UI
 from .ui.dialog import DialogBox
 
+NETWORK_SEND_DELAY = 6#frames between data send
 
 class Game:
     """Représentation du concept du jeu"""
@@ -19,6 +20,8 @@ class Game:
         # Création de la fenêtre de jeu
         self.network = Network()
         self.network_player = self.network.getPlayer()
+
+        self.last_network_send = 0
 
         self.screen = pygame.display.set_mode(size, pygame.SCALED | pygame.FULLSCREEN | pygame.HIDDEN, vsync=1)
         if is_starting_menu_over:
@@ -46,6 +49,9 @@ class Game:
         pygame.display.set_caption("Pyb0b")
         self.running = True
         self.is_starting_menu_over = is_starting_menu_over
+
+    def send_network_data(self):
+        self.network.send(self.player.position)
 
     def handle_imput(self):
         """Permet la gestion de toutes les entrées"""
@@ -331,7 +337,10 @@ class Game:
                 self.booting_animation()
             is_booted = True
 
-            self.network.send(self.player.position)
-
             # Cadence le taux de rafraîchissement de la fenêtre à 60 ips
-            clock.tick(60)
+            dt = clock.tick(60)
+            
+            self.last_network_send += dt
+            if self.last_network_send >= NETWORK_SEND_DELAY:
+                self.send_network_data()
+                self.last_network_send = 0
