@@ -8,6 +8,7 @@ import pytmx
 from .. import game
 
 from ..entity import NPC, Enemy, Player
+from ..ui import DialogBox
 
 
 @dataclass
@@ -35,7 +36,7 @@ class Map:
 class MapManager:
     """Gère la dynamique de carte"""
 
-    def __init__(self, screen, player: Player, current_map):
+    def __init__(self, screen: pygame.surface.Surface, player: Player, current_map: str):
         # stockage des cartes dans un dictionnaire sous forme "castle" -> Map("castle", walls, group)
         self.maps = dict()
         self.screen = screen
@@ -124,10 +125,9 @@ class MapManager:
                                                        "Tu y trouvera des tas de choses utile..."
                                                        " Si tu arrives à te concentrer",
                                                        "malgré EUGÈNE QUI N'ARRÊTE PAS DE COURIR !"])])
-
         self.teleport_npcs_enemies()
 
-    def check_dialog_collisions(self, dialog_box):
+    def check_dialog_collisions(self, dialog_box: DialogBox):
         """Détecte les collisions avec les PNJ et les Panneaux"""
         for sprite in self.get_group().sprites():
             # Dialogues avec PNJ
@@ -141,7 +141,7 @@ class MapManager:
         except:
             None
 
-    def terminate_dialog(self, dialog_box):
+    def terminate_dialog(self, dialog_box: DialogBox):
         """Met fin au dialogue"""
         player_position = self.player.old_position
         if player_position != self.player.position:
@@ -187,7 +187,7 @@ class MapManager:
             if sprite.feet.collidelist(self.get_collision()) > -1:
                 sprite.move_back()
 
-    def fade_out(self, color, speed):
+    def fade_out(self, color: tuple, speed: int):
         """Filtre de fondu inverse"""
         fade = pygame.Surface(self.screen.get_size()).convert_alpha()
         fade.fill(color)
@@ -207,22 +207,25 @@ class MapManager:
             self.screen.blit(fade, (0, 0))
             pygame.display.update()
 
-    def teleport_player(self, name):
+    def teleport_player(self, name: str):
         """Téléporte le joueur au point donné en paramètre"""
         point = self.get_object(name)
         self.player.position[0] = point.x
         self.player.position[1] = point.y
         self.player.save_location()
 
-    def register_map(self, name, portals:List[Portal]=[], npcs:List[NPC]=[], enemies:List=[]):
+    def register_map(self, name: str, portals: List[Portal] = [], npcs: List[NPC] = [], enemies: List = []):
         """Charge les différentes cartes"""
         # Charge la carte tmx en créant un objet "TiledMap" contenant les calques, objets et images d'une carte .tmx
         tmx_data = pytmx.util_pygame.load_pygame(f"assets/maps/{name}.tmx")
+        self.tmx_data = tmx_data
         # On récupère les données du fichier .tmx dans map_data
         map_data = pyscroll.data.TiledMapData(tmx_data)
         # On charge les calques du fichier .tmx
-        map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size(), alpha=True)
+        map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         map_layer.zoom = 4
+
+        self.change_layer_opacity('shadows1', 100)
 
         # Définition d'une liste stockant les boites de collision
         collision = []
@@ -252,24 +255,29 @@ class MapManager:
         # Création d'un objet Map qu'on injecte dans le dictionnaire les repertoriant
         self.maps[name] = Map(name, collision, sign_texts, group, tmx_data, portals, npcs, enemies)
 
+    def change_layer_opacity(self, layer_name: str, opacity: int):
+        """Change pour chaque tuile des layers shadows1 l'opacité"""
+        for tile in self.tmx_data.get_layer_by_name(layer_name).tiles():
+            tile[2].set_alpha(opacity)
+
     # Accesseurs (getters)
-    def get_map(self):
+    def get_map(self) -> Map:
         """Renvoie la carte actuellement affichée"""
         return self.maps[self.current_map]
 
-    def get_group(self):
+    def get_group(self) -> pyscroll.PyscrollGroup:
         """Renvoie le groupe"""
         return self.get_map().group
 
-    def get_collision(self):
+    def get_collision(self) -> list:
         """Renvoie les collisions"""
         return self.get_map().collision
 
-    def get_sign_collision(self):
+    def get_sign_collision(self) -> dict:
         """Renvoie les collisions avec les panneaux"""
         return self.get_map().sign_texts
 
-    def get_object(self, name):
+    def get_object(self, name: str) -> pytmx.TiledObject:
         """Renvoie l'objet demandé"""
         return self.get_map().tmx_data.get_object_by_name(name)
 
@@ -279,7 +287,6 @@ class MapManager:
             map_data = self.maps[map]
             npcs = map_data.npcs
             enemies = map_data.enemies
-            print(map)
             for npc in npcs:
                 npc.load_points(map_data.tmx_data)
                 npc.teleport_spawn()
@@ -308,7 +315,7 @@ class MapManager:
         self.get_group().draw(self.screen)
         self.get_group().center(self.player.rect.center)
 
-    def update(self, player):
+    def update(self, player: Player):
         """Actualise le groupe"""
         self.get_group().update()
         self.check_collisions()

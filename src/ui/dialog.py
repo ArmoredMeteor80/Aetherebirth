@@ -1,3 +1,4 @@
+from __future__ import annotations
 import pygame
 
 
@@ -15,7 +16,7 @@ class DialogBox:
         self.reading = False
         self.sound = pygame.mixer.Sound('assets/sounds/dialog_sound.wav')
 
-    def execute(self, dialog):
+    def execute(self, dialog: list):
         """Permet l'execution de la boite de dialogue"""
         pygame.mixer.Sound.play(self.sound).set_volume(0.2)
         if self.reading:
@@ -30,7 +31,7 @@ class DialogBox:
         if self.reading:
             self.reading = False
 
-    def render(self, screen):
+    def render(self, screen: pygame.surface.Surface):
         """Affiche la boîte de dialogue"""
         if self.reading:
             # Positionnement et affichage de la boîte de dialogue

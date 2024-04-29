@@ -15,12 +15,18 @@ NETWORK_SEND_DELAY = 30#frames between data send
 class Game:
     """Représentation du concept du jeu"""
 
-    def __init__(self, size, is_starting_menu_over):
+    def __init__(self, size: tuple, is_starting_menu_over: bool):
         """Constructeur"""
+<<<<<<< HEAD
         # Création de la fenêtre de jeu
         self.network = Network()
         self.network.start()
+=======
+        # self.network = Network()
+        # self.network_player = self.network.getPlayer()
+>>>>>>> 39c5727 (Ajout de documentation, notamment les types des paramètres dans les méthodes et fonctions, autrement, ajout de la capacité de modifier l'opacité d'un layer selon son nom)
 
+        # Création de la fenêtre de jeu
         self.screen = pygame.display.set_mode(size, pygame.SCALED | pygame.FULLSCREEN | pygame.HIDDEN, vsync=1)
         if is_starting_menu_over:
             # Création d'un objet "SaveLoadSystem" gérant le système de sauvegarde et de chargement
@@ -138,7 +144,7 @@ class Game:
         pygame.quit()
         sys.exit()
 
-    def fade_in(self, color, speed):
+    def fade_in(self, color: tuple, speed: int):
         """Filtre de fondu"""
         # on fait une copie de l'écran
         screen_image = self.screen.copy()
@@ -151,7 +157,7 @@ class Game:
             self.screen.blit(fade, (0, 0))
             pygame.display.update()
 
-    def fade_out(self, color, speed):
+    def fade_out(self, color: tuple, speed: int):
         """Filtre de fondu inverse"""
         fade = pygame.Surface(self.screen.get_size()).convert_alpha()
         fade.fill(color)
@@ -182,14 +188,14 @@ class Game:
         else:
             self.fade_out((255, 255, 255), 5)
 
-    def draw_text(self, text_list, pos_list, size=36, text_color=(255, 255, 255)):
+    def draw_text(self, text_list: list, pos_list: list, size: int = 36, text_color: tuple = (255, 255, 255)):
         """Dessine une liste de textes à leurs positions respectives sur l'écran"""
         font = pygame.font.Font('assets/dialogs/dialog_font.ttf', size)
         for i in range(len(text_list)):
             img = font.render(text_list[i], False, text_color)
             self.screen.blit(img, pos_list[i])
 
-    def play_sound(self, sound_name, volume=1):
+    def play_sound(self, sound_name: str, volume: int = 1):
         """Joue le son passé en paramètre"""
         if sound_name in self.sounds:
             pygame.mixer.Sound.play(self.sounds[sound_name]).set_volume(volume)
@@ -354,6 +360,11 @@ class Game:
                 self.booting_animation()
             is_booted = True
 
+<<<<<<< HEAD
+=======
+            # self.network.send(self.player.position)
+
+>>>>>>> 39c5727 (Ajout de documentation, notamment les types des paramètres dans les méthodes et fonctions, autrement, ajout de la capacité de modifier l'opacité d'un layer selon son nom)
             # Cadence le taux de rafraîchissement de la fenêtre à 60 ips
             dt = clock.tick(60)
             

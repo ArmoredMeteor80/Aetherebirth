@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pygame
 
 
@@ -11,7 +13,7 @@ class UI:
         self.health_bar_rect = pygame.Rect(20, 20, 300, 25)
         self.stamina_bar_rect = pygame.Rect(20, 55, 200, 25)
 
-    def show_bar(self, current_amount, max_amount, bg_rect, color):
+    def show_bar(self, current_amount: int, max_amount: int, bg_rect: pygame.rect.Rect, color: str):
         """Affiche les barres"""
         # On dessine le fond des barres
         pygame.draw.rect(self.display_surface, (49, 26, 18), bg_rect)
@@ -27,7 +29,7 @@ class UI:
         pygame.draw.rect(self.display_surface, (79, 56, 48), current_rect, 3)
         pygame.draw.rect(self.display_surface, (79, 56, 48), bg_rect, 3)
 
-    def display(self, player):
+    def display(self, player: Player):
         """Affiche l'interface utilisateur"""
         self.show_bar(player.health, player.stats['health'], self.health_bar_rect, 'red')
         if player.is_exhausted[0]:

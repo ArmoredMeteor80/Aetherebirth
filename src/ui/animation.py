@@ -5,7 +5,7 @@ import random
 # La classe "AnimateSprite" hérite de la classe parente "Sprite" de pygame.sprite
 class AnimateSprite(pygame.sprite.Sprite):
     """Classe qui anime les sprites"""
-    def __init__(self, name):
+    def __init__(self, name: str):
         super().__init__()
         self.sprite_sheet = pygame.image.load(f"assets/sprites/sprite_sheet_{name}.png",).convert_alpha()
         if name == "bob":
@@ -107,7 +107,7 @@ class AnimateSprite(pygame.sprite.Sprite):
         self.attack_clock_combo_extender = 0
         self.speed = 1
 
-    def change_animation(self, name):
+    def change_animation(self, name: str):
         """Change l'animation en fonction d'un nom d'animation"""
         if name == 'attack':
             if self.attack_animation_index >= len(self.images[name][0]):
@@ -158,7 +158,7 @@ class AnimateSprite(pygame.sprite.Sprite):
                     self.images['still'] = (self.get_images(self.images[name][1] * 32, 0, 1), 0)
                     self.images['attack'] = (self.get_images(self.images[name][1]*32 + 128, 0, 11), 0)
 
-    def get_images(self, y, start, end, size=32):
+    def get_images(self, y: int, start: int, end: int, size: int = 32):
         """Renvoie une liste d'images"""
         images = []
         for i in range(start, end+1):
@@ -167,7 +167,7 @@ class AnimateSprite(pygame.sprite.Sprite):
             images.append(image)
         return images
 
-    def get_image(self, x, y, size=32):
+    def get_image(self, x: int, y: int, size: int = 32):
         """Renvoie les coordonnées x, y du sprite sheet de l'entité """
         # Création d'une surface de taille size par size
         image = pygame.Surface([size, size], pygame.SRCALPHA)

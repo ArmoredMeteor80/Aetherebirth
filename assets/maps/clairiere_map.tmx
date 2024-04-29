@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="234">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="13" nextobjectid="234">
  <tileset firstgid="1" source="tiled_ressources/tilesets/grass.tsx"/>
  <tileset firstgid="81" source="tiled_ressources/tilesets/props.tsx"/>
  <tileset firstgid="337" source="tiled_ressources/tilesets/shadow.tsx"/>
@@ -78,7 +78,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,29,31,14,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,30,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="3" name="shadows1" width="60" height="30">
+ <layer id="3" name="shadows1" width="60" height="30" opacity="0.27">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,1331,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,545,546,0,0,0,0,0,0,0,0,1464,1465,1466,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1676,0,0,0,0,0,0,0,0,0,0,0,0,

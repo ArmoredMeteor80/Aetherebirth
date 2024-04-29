@@ -3,11 +3,12 @@ import pygame
 
 from ..ui import AnimateSprite
 
+
 # La classe "Entity" hérite de la classe "AnimateSprite".
 class Entity(AnimateSprite):
     """Classe d'une entité"""
 
-    def __init__(self, name, x, y, size=32):
+    def __init__(self, name: str, x: int, y: int, size=32):
         """Constructeur qui initialise la Classe 'Sprite'"""
         super().__init__(name)
         if "chicken" in name:
@@ -112,7 +113,7 @@ class Entity(AnimateSprite):
         self.position[0] -= self.speed - 1
         self.position[1] -= self.speed - 1
 
-    def stay_still(self, player):
+    def stay_still(self, player: Player):
         """Permet aux PNJ de rester statiques"""
         x_diff = player.position[0] - self.position[0]
         y_diff = player.position[1] - self.position[1]
@@ -153,7 +154,7 @@ class Entity(AnimateSprite):
 class NPC(Entity):
     """Classe des PNJ héritant de la Classe Entity"""
 
-    def __init__(self, name:str, nb_points:int=1, dialog:list[str]=[], npc_id:int=1, speed:float=1):
+    def __init__(self, name: str, nb_points: int = 1, dialog: list[str] = [], npc_id: int = 1, speed: float = 1):
         super().__init__(name, 0, 0)
         self.nb_points = nb_points
         self.dialog = dialog
@@ -196,7 +197,7 @@ class NPC(Entity):
         self.position[1] = location.y
         self.save_location()
 
-    def load_points(self, tmx_data):
+    def load_points(self, tmx_data: pytmx.TiledMap):
         """Charge les points de passage du PNJ"""
         for num in range(1, self.nb_points + 1):
             point = tmx_data.get_object_by_name(f"{self.name}_path{num}_{self.id}")
