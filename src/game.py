@@ -2,7 +2,7 @@ import os
 import sys
 import pygame
 
-from .networking import Network, NetworkEntityManager
+from .networking import NetworkManager, NetworkEntityManager
 
 from .save import SaveLoadSystem
 from .map import MapManager
@@ -11,16 +11,13 @@ from .ui import UI
 from .ui.dialog import DialogBox
 
 NETWORK_SEND_DELAY = 30#frames between data send
+NETWORK = True
 
 class Game:
     """Représentation du concept du jeu"""
 
     def __init__(self, size, is_starting_menu_over):
         """Constructeur"""
-        # Création de la fenêtre de jeu
-        self.network = Network()
-        self.network.start()
-
         self.screen = pygame.display.set_mode(size, pygame.SCALED | pygame.FULLSCREEN | pygame.HIDDEN, vsync=1)
         if is_starting_menu_over:
             # Création d'un objet "SaveLoadSystem" gérant le système de sauvegarde et de chargement
@@ -36,12 +33,17 @@ class Game:
             self.dialog_box = DialogBox()
             self.controls_shown = controls_shown
             self.ui = UI()
-            
+
+
+            self.network_manager = NetworkManager()
             self.network_entities_manager = NetworkEntityManager(self.map_manager)
-            self.network_players = self.network.getPlayers()
-
-            self.last_network_send = 0
-
+            # Connect the client, let the player input a name and join the server.
+            self.network_manager.connect_in_thread(hostname="127.0.0.1", port=5555)
+            self.network_manager.dispatch_event("JOIN", input("Player name: "))
+            # Wait until "PLAYER_CREATED" has been handled.
+            while self.network_manager.player_id is None:
+                pass
+            
         # Dictionnaire contenant les sons du jeu
         self.sounds = {'click_sound_effect': pygame.mixer.Sound('assets/sounds/click_sound_effect.wav'),
                        'click_error_sound_effect': pygame.mixer.Sound('assets/sounds/click_error_sound_effect.wav'),
@@ -52,23 +54,6 @@ class Game:
         pygame.display.set_caption("Pyb0b")
         self.running = True
         self.is_starting_menu_over = is_starting_menu_over
-
-    def send_network_data(self):
-        return self.network.sendData(self.player, self.map_manager)
-
-    def update_network(self, dt: int):
-        self.last_network_send += dt
-        if self.last_network_send >= NETWORK_SEND_DELAY:
-            reply = self.send_network_data()
-            #print(reply)
-            self.last_network_send = 0
-            if ("changed" in reply) and (reply['changed']==False):
-                pass
-            else:
-                if "players" in reply:
-                    print(reply)
-                    self.network_entities_manager.updatePlayers(reply["players"])
-                print(reply)
 
     def handle_imput(self):
         """Permet la gestion de toutes les entrées"""
@@ -90,6 +75,7 @@ class Game:
             self.player.move_right()
         elif pressed[pygame.K_z] or pressed[pygame.K_UP]:
             self.player.move_up()
+        moved = len(pressed) > 0
 
         # Attaque du joueur
         if self.player.is_attacking:
@@ -119,6 +105,19 @@ class Game:
             # Régénération passive de vie et d'endurance
             self.player.stamina_regen(0.2)
             self.player.check_exhaustion()
+            
+        if(moved):
+            # Safely access the synchronized shared game state.
+            with self.network_manager.access_game_state() as game_state:
+                # Notify server about player movement.
+                #old_position = game_state.players[self.network_manager.player_id]["position"]
+                self.network_entities_manager.updatePlayers(game_state.players)
+                self.network_manager.dispatch_event(
+                    event_type="MOVE",
+                    player_id=self.network_manager.player_id,
+                    new_position=(self.player.position[0], self.player.position[1]),
+                    animation=self.player.animation_name,
+                )
 
     def update(self):
         """Actualise le groupe"""
@@ -134,6 +133,11 @@ class Game:
         pygame.mixer.music.fadeout(1500)
         self.fade_in((0, 0, 0), 2)
         self.running = False
+
+        # Déconnexion du serveur
+        self.network_manager.disconnect()
+        #self.network_manager.disconnect(shutdown_server=True)
+        
         # Déinitialise tous les modules pygame
         pygame.quit()
         sys.exit()
@@ -356,5 +360,3 @@ class Game:
 
             # Cadence le taux de rafraîchissement de la fenêtre à 60 ips
             dt = clock.tick(60)
-            
-            self.update_network(dt)

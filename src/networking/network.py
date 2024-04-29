@@ -2,58 +2,20 @@ import socket
 import pickle
 import json
 
+from pygase import Client
+
 from ..entity import Player
 from ..map import MapManager
 
-class Network:
+class NetworkManager(Client):
     def __init__(self):
-        self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server = "127.0.0.1"
-        self.port = 5555
-        self.addr = (self.server, self.port)
+        super().__init__()
+        self.player_id = None
+        # The backend will send a "PLAYER_CREATED" event in response to a "JOIN" event.
+        self.register_event_handler("PLAYER_CREATED", self.on_player_created)
 
-
-    def start(self):
-        self.network_players = self.connect()
-        return self
-
-
-    def stop(self):
-        self.client.close()
-        return self
-
-    def sendData(self, player: Player, map_manager: MapManager):
-        return self.send({
-            "position": {
-                "map": map_manager.current_map,
-                "x": player.position[0],
-                "y": player.position[1],
-            },
-            "name": player.player_name,
-            "stats": player.stats,
-            "actions": {
-                "is_running": player.is_running,
-                "is_exhausted": player.is_exhausted,
-                "is_attacking": player.is_attacking
-            }
-        })
-
-    def getPlayers(self):
-        return self.network_players
-
-    def connect(self):
-        try:
-            self.client.connect(self.addr)
-            return json.loads(self.client.recv(2048))
-        except:
-            pass
-
-    def send(self, data):
-        try:
-            self.client.send(bytes(json.dumps(data),encoding="utf-8"))
-            #self.client.send(pickle.dumps(data))
-            reply = self.client.recv(2048)
-            return json.loads(reply.decode())
-            #return pickle.loads(self.client.recv(2048))
-        except socket.error as e:
-            print(e)
+    # "PLAYER_CREATED" event handler
+    def on_player_created(self, player_id):
+        # Remember the id the backend assigned the player.
+        self.player_id = player_id
+    

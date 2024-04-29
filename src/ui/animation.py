@@ -8,6 +8,7 @@ class AnimateSprite(pygame.sprite.Sprite):
     def __init__(self, name):
         super().__init__()
         self.sprite_sheet = pygame.image.load(f"assets/sprites/sprite_sheet_{name}.png",).convert_alpha()
+        self.animation_name = "still"
         if name == "bob":
             # dictionnaire contenant pour chaque clé un tuple composé d'une liste d'images
             # et d'un entier correspondant à une orientation
@@ -109,6 +110,7 @@ class AnimateSprite(pygame.sprite.Sprite):
 
     def change_animation(self, name):
         """Change l'animation en fonction d'un nom d'animation"""
+        self.animation_name = name
         if name == 'attack':
             if self.attack_animation_index >= len(self.images[name][0]):
                 self.attack_animation_index = 0
