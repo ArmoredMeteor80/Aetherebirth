@@ -12,7 +12,7 @@ from .ui.dialog import DialogBox
 
 NETWORK_SEND_DELAY = 30#frames between data send
 NETWORK = True
-HOSTNAME="ninjdai.ynh.fr"
+HOSTNAME="127.0.0.1"
 
 class Game:
     """Représentation du concept du jeu"""

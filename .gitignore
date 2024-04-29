@@ -3,3 +3,4 @@ save_data/
 *.tiled-session
 venv/
 include/
+poetry.lock
