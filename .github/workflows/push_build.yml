@@ -13,8 +13,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Rename index.py to __main__.py
-        run: mv index.py __main__.py
+      - name: Rename main.py to __main__.py
+        run: mv main.py __main__.py
       - name: Create zip from files
         run: zip -r game.zip *
       - name: Add env indications and remove .zip extension
