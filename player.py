@@ -104,8 +104,8 @@ class Entity(AnimateSprite):
 class Player(Entity):
     """Classe d'un joueur héritant de la Classe Entity"""
 
-    def __init__(self, position):
-        super().__init__("bob", position[0], position[1])
+    def __init__(self, position, **kw):
+        super().__init__("bob", position[0], position[1], **kw)
         self.stats = {"hp": 3}
 
 
