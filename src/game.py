@@ -1,8 +1,8 @@
 import os
+import sys
 import pygame
 
 from .save import SaveLoadSystem
-
 from .map import MapManager
 from .entity import Player
 from .ui import UI
@@ -106,7 +106,9 @@ class Game:
         pygame.mixer.music.fadeout(1500)
         self.fade_in((0, 0, 0), 2)
         self.running = False
+        # Déinitialise tous les modules pygame
         pygame.quit()
+        sys.exit()
 
     def fade_in(self, color, speed):
         """Filtre de fondu"""
@@ -326,6 +328,3 @@ class Game:
 
             # Cadence le taux de rafraîchissement de la fenêtre à 60 ips
             clock.tick(60)
-
-        # Déinitialise tous les modules pygame
-        pygame.quit()
