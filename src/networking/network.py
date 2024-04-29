@@ -1,5 +1,6 @@
 import socket
 import pickle
+import json
 
 from ..entity import Player
 from ..map import MapManager
@@ -10,11 +11,19 @@ class Network:
         self.server = "127.0.0.1"
         self.port = 5555
         self.addr = (self.server, self.port)
-        self.player = self.connect()
-        print(self.player)
+
+
+    def start(self):
+        self.network_players = self.connect()
+        return self
+
+
+    def stop(self):
+        self.client.close()
+        return self
 
     def sendData(self, player: Player, map_manager: MapManager):
-        self.send({
+        return self.send({
             "position": {
                 "map": map_manager.current_map,
                 "x": player.position[0],
@@ -29,19 +38,22 @@ class Network:
             }
         })
 
-    def getPlayer(self):
-        return self.player
+    def getPlayers(self):
+        return self.network_players
 
     def connect(self):
         try:
             self.client.connect(self.addr)
-            return pickle.loads(self.client.recv(2048))
+            return json.loads(self.client.recv(2048))
         except:
             pass
 
     def send(self, data):
         try:
-            self.client.send(pickle.dumps(data))
-            return pickle.loads(self.client.recv(2048))
+            self.client.send(bytes(json.dumps(data),encoding="utf-8"))
+            #self.client.send(pickle.dumps(data))
+            reply = self.client.recv(2048)
+            return json.loads(reply.decode())
+            #return pickle.loads(self.client.recv(2048))
         except socket.error as e:
             print(e)

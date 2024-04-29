@@ -2,7 +2,7 @@ import os
 import sys
 import pygame
 
-from .networking import Network
+from .networking import Network, NetworkEntityManager
 
 from .save import SaveLoadSystem
 from .map import MapManager
@@ -19,9 +19,7 @@ class Game:
         """Constructeur"""
         # Création de la fenêtre de jeu
         self.network = Network()
-        self.network_player = self.network.getPlayer()
-
-        self.last_network_send = 0
+        self.network.start()
 
         self.screen = pygame.display.set_mode(size, pygame.SCALED | pygame.FULLSCREEN | pygame.HIDDEN, vsync=1)
         if is_starting_menu_over:
@@ -38,6 +36,11 @@ class Game:
             self.dialog_box = DialogBox()
             self.controls_shown = controls_shown
             self.ui = UI()
+            
+            self.network_entities_manager = NetworkEntityManager(self.map_manager)
+            self.network_players = self.network.getPlayers()
+
+            self.last_network_send = 0
 
         # Dictionnaire contenant les sons du jeu
         self.sounds = {'click_sound_effect': pygame.mixer.Sound('assets/sounds/click_sound_effect.wav'),
@@ -51,7 +54,21 @@ class Game:
         self.is_starting_menu_over = is_starting_menu_over
 
     def send_network_data(self):
-        self.network.sendData(self.player, self.map_manager)
+        return self.network.sendData(self.player, self.map_manager)
+
+    def update_network(self, dt: int):
+        self.last_network_send += dt
+        if self.last_network_send >= NETWORK_SEND_DELAY:
+            reply = self.send_network_data()
+            #print(reply)
+            self.last_network_send = 0
+            if ("changed" in reply) and (reply['changed']==False):
+                pass
+            else:
+                if "players" in reply:
+                    print(reply)
+                    self.network_entities_manager.updatePlayers(reply["players"])
+                print(reply)
 
     def handle_imput(self):
         """Permet la gestion de toutes les entrées"""
@@ -340,7 +357,4 @@ class Game:
             # Cadence le taux de rafraîchissement de la fenêtre à 60 ips
             dt = clock.tick(60)
             
-            self.last_network_send += dt
-            if self.last_network_send >= NETWORK_SEND_DELAY:
-                self.send_network_data()
-                self.last_network_send = 0
+            self.update_network(dt)
