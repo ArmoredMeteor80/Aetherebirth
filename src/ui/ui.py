@@ -1,5 +1,4 @@
 import pygame
-from player import Player
 
 
 class UI:
@@ -28,7 +27,7 @@ class UI:
         pygame.draw.rect(self.display_surface, (79, 56, 48), current_rect, 3)
         pygame.draw.rect(self.display_surface, (79, 56, 48), bg_rect, 3)
 
-    def display(self, player: Player):
+    def display(self, player):
         """Affiche l'interface utilisateur"""
         self.show_bar(player.health, player.stats['health'], self.health_bar_rect, 'red')
         if player.is_exhausted[0]:

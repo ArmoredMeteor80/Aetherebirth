@@ -1,7 +1,7 @@
+from __future__ import annotations
 import pygame
 
-from animation import AnimateSprite
-
+from ..ui import AnimateSprite
 
 # La classe "Entity" hérite de la classe "AnimateSprite".
 class Entity(AnimateSprite):
@@ -30,7 +30,7 @@ class Entity(AnimateSprite):
 
     def move_right(self):
         """Déplace l'entité à droite"""
-        if isinstance(self, Player) and self.is_exhausted[0] and self.is_exhausted[1] < 20:
+        if self.is_exhausted[0] and self.is_exhausted[1] < 20:
             animation = 'exhausted_right'
             self.is_exhausted[1] += 1
         else:
@@ -40,7 +40,7 @@ class Entity(AnimateSprite):
 
     def move_left(self):
         """Déplace l'entité à gauche"""
-        if isinstance(self, Player) and self.is_exhausted[0] and self.is_exhausted[1] < 20:
+        if self.is_exhausted[0] and self.is_exhausted[1] < 20:
             animation = 'exhausted_left'
             self.is_exhausted[1] += 1
         else:
@@ -50,7 +50,7 @@ class Entity(AnimateSprite):
 
     def move_up(self):
         """Déplace l'entité en haut"""
-        if isinstance(self, Player) and self.is_exhausted[0] and self.is_exhausted[1] < 20:
+        if self.is_exhausted[0] and self.is_exhausted[1] < 20:
             animation = 'exhausted_up'
             self.is_exhausted[1] += 1
         else:
@@ -60,7 +60,7 @@ class Entity(AnimateSprite):
 
     def move_down(self):
         """Déplace l'entité en bas"""
-        if isinstance(self, Player) and self.is_exhausted[0] and self.is_exhausted[1] < 20:
+        if self.is_exhausted[0] and self.is_exhausted[1] < 20:
             animation = 'exhausted_down'
             self.is_exhausted[1] += 1
         else:
@@ -70,7 +70,7 @@ class Entity(AnimateSprite):
 
     def move_right_down(self):
         """Déplace l'entité en bas à droite"""
-        if isinstance(self, Player) and self.is_exhausted[0] and self.is_exhausted[1] < 20:
+        if self.is_exhausted[0] and self.is_exhausted[1] < 20:
             animation = 'exhausted_right'
             self.is_exhausted[1] += 1
         else:
@@ -81,7 +81,7 @@ class Entity(AnimateSprite):
 
     def move_left_down(self):
         """Déplace l'entité en bas à gauche"""
-        if isinstance(self, Player) and self.is_exhausted[0] and self.is_exhausted[1] < 20:
+        if self.is_exhausted[0] and self.is_exhausted[1] < 20:
             animation = 'exhausted_left'
             self.is_exhausted[1] += 1
         else:
@@ -92,7 +92,7 @@ class Entity(AnimateSprite):
 
     def move_right_up(self):
         """Déplace l'entité en haut à droite"""
-        if isinstance(self, Player) and self.is_exhausted[0] and self.is_exhausted[1] < 20:
+        if self.is_exhausted[0] and self.is_exhausted[1] < 20:
             animation = 'exhausted_up'
             self.is_exhausted[1] += 1
         else:
@@ -103,7 +103,7 @@ class Entity(AnimateSprite):
 
     def move_left_up(self):
         """Déplace l'entité en haut à gauche"""
-        if isinstance(self, Player) and self.is_exhausted[0] and self.is_exhausted[1] < 20:
+        if self.is_exhausted[0] and self.is_exhausted[1] < 20:
             animation = 'exhausted_up'
             self.is_exhausted[1] += 1
         else:
@@ -149,48 +149,6 @@ class Entity(AnimateSprite):
         self.position = self.old_position
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
-
-
-class Player(Entity):
-    """Classe d'un joueur héritant de la Classe Entity"""
-
-    def __init__(self, position, player_health: int):
-        super().__init__("bob", position[0], position[1])
-        self.stats = {"health": 100, "stamina": 100, "attack_damage" : 25}
-        self.health = player_health
-        self.stamina = self.stats['stamina']
-        self.attack_damage = self.stats['attack_damage']
-
-    def stamina_regen(self, regen_rate):
-        """Régénération passive/active d'endurance"""
-        if self.stamina < self.stats['stamina']:
-            self.stamina += regen_rate
-
-    def stamina_depletion(self, deplet_rate, passive=True):
-        """Epuisement passif/actif d'endurance"""
-        if passive:
-            if self.stamina >= deplet_rate:
-                self.stamina -= deplet_rate
-        else:
-            self.stamina -= deplet_rate
-
-    def health_regen(self, regen_rate):
-        """Régénération de la vie"""
-        if self.health < self.stats['health']:
-            self.health += regen_rate
-
-    def health_depletion(self, deplet_rate):
-        """Epuisement de la vie"""
-        self.health -= deplet_rate
-
-    def check_exhaustion(self):
-        """Change le statut d'épuisement du joueur"""
-        if self.stamina <= 1:
-            self.is_exhausted[0] = True
-        elif self.stamina >= self.stats['stamina'] / 3 and self.is_exhausted[0]:
-            self.is_exhausted[0] = False
-            self.is_exhausted[1] = 0
-
 
 class NPC(Entity):
     """Classe des PNJ héritant de la Classe Entity"""
@@ -367,3 +325,6 @@ class Enemy(NPC):
                     self.pathing = True
             else:
                 self.move(player)
+
+
+

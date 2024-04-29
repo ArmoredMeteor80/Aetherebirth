@@ -1,12 +1,12 @@
 import os
 import pygame
 
-from save_load_manager import SaveLoadSystem
+from .save import SaveLoadSystem
 
-from map import MapManager
-from entity import Player
-from ui import UI
-from dialog import DialogBox
+from .map import MapManager
+from .entity import Player
+from .ui import UI
+from .ui.dialog import DialogBox
 
 
 class Game:
@@ -25,7 +25,7 @@ class Game:
                 [(1568, 352), "clairiere_map", True, 100])
 
             # Génération d'un joueur
-            self.player = Player(player_position, player_health)
+            self.player = Player(player_position)
             self.map_manager = MapManager(self.screen, self.player, current_map)
             self.dialog_box = DialogBox()
             self.controls_shown = controls_shown

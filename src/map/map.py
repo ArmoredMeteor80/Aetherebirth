@@ -5,8 +5,9 @@ import pygame
 import pyscroll
 import pytmx
 
-import game
-from entity import NPC, Enemy, Player
+from .. import game
+
+from ..entity import NPC, Enemy, Player
 
 
 @dataclass
