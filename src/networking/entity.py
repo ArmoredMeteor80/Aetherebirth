@@ -43,7 +43,7 @@ class NetworkEntityManager():
             else: 
                 entity = self.network_entities[str(player_id)]
                 entity.setPos(player['position'][0], player['position'][1])
-                if(entity.animation_name != player['animation'] ):
+                if('animation' in player and entity.animation_name != player['animation'] ):
                     entity.change_animation(player['animation'])
             player_list.append(player_id)
 

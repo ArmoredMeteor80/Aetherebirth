@@ -12,6 +12,7 @@ from .ui.dialog import DialogBox
 
 NETWORK_SEND_DELAY = 30#frames between data send
 NETWORK = True
+HOSTNAME="ninjdai.ynh.fr"
 
 class Game:
     """Représentation du concept du jeu"""
@@ -38,7 +39,7 @@ class Game:
             self.network_manager = NetworkManager()
             self.network_entities_manager = NetworkEntityManager(self.map_manager)
             # Connect the client, let the player input a name and join the server.
-            self.network_manager.connect_in_thread(hostname="127.0.0.1", port=5555)
+            self.network_manager.connect_in_thread(hostname=HOSTNAME, port=5555)
             self.network_manager.dispatch_event("JOIN", input("Player name: "))
             # Wait until "PLAYER_CREATED" has been handled.
             while self.network_manager.player_id is None:
