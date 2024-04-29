@@ -10,7 +10,7 @@ from .entity import Player
 from .ui import UI
 from .ui.dialog import DialogBox
 
-NETWORK_SEND_DELAY = 6#frames between data send
+NETWORK_SEND_DELAY = 30#frames between data send
 
 class Game:
     """Représentation du concept du jeu"""
