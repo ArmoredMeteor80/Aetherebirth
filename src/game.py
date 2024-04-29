@@ -17,14 +17,8 @@ class Game:
 
     def __init__(self, size: tuple, is_starting_menu_over: bool):
         """Constructeur"""
-<<<<<<< HEAD
-        # Création de la fenêtre de jeu
         self.network = Network()
         self.network.start()
-=======
-        # self.network = Network()
-        # self.network_player = self.network.getPlayer()
->>>>>>> 39c5727 (Ajout de documentation, notamment les types des paramètres dans les méthodes et fonctions, autrement, ajout de la capacité de modifier l'opacité d'un layer selon son nom)
 
         # Création de la fenêtre de jeu
         self.screen = pygame.display.set_mode(size, pygame.SCALED | pygame.FULLSCREEN | pygame.HIDDEN, vsync=1)
@@ -360,11 +354,6 @@ class Game:
                 self.booting_animation()
             is_booted = True
 
-<<<<<<< HEAD
-=======
-            # self.network.send(self.player.position)
-
->>>>>>> 39c5727 (Ajout de documentation, notamment les types des paramètres dans les méthodes et fonctions, autrement, ajout de la capacité de modifier l'opacité d'un layer selon son nom)
             # Cadence le taux de rafraîchissement de la fenêtre à 60 ips
             dt = clock.tick(60)
             

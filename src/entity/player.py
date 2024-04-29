@@ -7,11 +7,7 @@ import os
 class Player(Entity):
     """Classe d'un joueur héritant de la Classe Entity"""
 
-<<<<<<< HEAD
-    def __init__(self, position, player_health: int=100, player_name: str = f"Player_{os.urandom(5)}"):
-=======
-    def __init__(self, position: tuple, player_health: int = 100):
->>>>>>> 39c5727 (Ajout de documentation, notamment les types des paramètres dans les méthodes et fonctions, autrement, ajout de la capacité de modifier l'opacité d'un layer selon son nom)
+    def __init__(self, position: tuple, player_health: int=100, player_name: str = f"Player_{os.urandom(5)}"):
         super().__init__("bob", position[0], position[1])
         self.stats = {"health": 100, "stamina": 100, "attack_damage" : 25}
         self.health = player_health
