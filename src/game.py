@@ -2,6 +2,8 @@ import os
 import sys
 import pygame
 
+from .networking import Network
+
 from .save import SaveLoadSystem
 from .map import MapManager
 from .entity import Player
@@ -15,6 +17,9 @@ class Game:
     def __init__(self, size, is_starting_menu_over):
         """Constructeur"""
         # Création de la fenêtre de jeu
+        self.network = Network()
+        self.network_player = self.network.getPlayer()
+
         self.screen = pygame.display.set_mode(size, pygame.SCALED | pygame.FULLSCREEN | pygame.HIDDEN, vsync=1)
         if is_starting_menu_over:
             # Création d'un objet "SaveLoadSystem" gérant le système de sauvegarde et de chargement
@@ -325,6 +330,8 @@ class Game:
             if not is_booted:
                 self.booting_animation()
             is_booted = True
+
+            self.network.send(self.player.position)
 
             # Cadence le taux de rafraîchissement de la fenêtre à 60 ips
             clock.tick(60)
