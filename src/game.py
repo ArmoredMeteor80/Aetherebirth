@@ -39,8 +39,9 @@ class Game:
             self.network_manager = NetworkManager()
             self.network_entities_manager = NetworkEntityManager(self.map_manager)
             # Connect the client, let the player input a name and join the server.
+            name = input("Player name: ")
             self.network_manager.connect_in_thread(hostname=HOSTNAME, port=5555)
-            self.network_manager.dispatch_event("JOIN", input("Player name: "))
+            self.network_manager.dispatch_event("JOIN", name)
             # Wait until "PLAYER_CREATED" has been handled.
             while self.network_manager.player_id is None:
                 pass
@@ -108,17 +109,18 @@ class Game:
             self.player.check_exhaustion()
             
         if(moved):
-            # Safely access the synchronized shared game state.
-            with self.network_manager.access_game_state() as game_state:
-                # Notify server about player movement.
-                #old_position = game_state.players[self.network_manager.player_id]["position"]
-                self.network_entities_manager.updatePlayers(game_state.players)
-                self.network_manager.dispatch_event(
-                    event_type="MOVE",
-                    player_id=self.network_manager.player_id,
-                    new_position=(self.player.position[0], self.player.position[1]),
-                    animation=self.player.animation_name,
-                )
+            self.network_manager.dispatch_event(
+                event_type="MOVE",
+                player_id=self.network_manager.player_id,
+                new_position=(self.player.position[0], self.player.position[1]),
+                animation=self.player.animation_name,
+            )
+        # Safely access the synchronized shared game state.
+        with self.network_manager.access_game_state() as game_state:
+            # Notify server about player movement.
+            #old_position = game_state.players[self.network_manager.player_id]["position"]
+            print(game_state)
+            self.network_entities_manager.updatePlayers(game_state.players)
 
     def update(self):
         """Actualise le groupe"""

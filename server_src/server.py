@@ -10,11 +10,12 @@ class Server:
         )
         self.ids = {}#Key: client_address, value: player_id
         
-        self.backend = Backend(self.game_state, self.time_step, event_handlers={"MOVE": self.on_move})
+        self.backend = Backend(self.game_state, self.time_step, event_handlers={})
         
         # Register the handlers.
         self.backend.game_state_machine.register_event_handler("JOIN", self.on_join)
         self.backend.game_state_machine.register_event_handler("LEAVE", self.on_leave)
+        self.backend.game_state_machine.register_event_handler("MOVE", self.on_move)
 
     def stop(self):
         self.backend.shutdown()
@@ -24,6 +25,7 @@ class Server:
 
     # "MOVE" event handler
     def on_move(self, player_id, new_position, animation, **kwargs):
+        print(GameState.players)
         print(f"{self.game_state.players[player_id]['name']} moved to {new_position}")
         return {"players": {player_id: {"position": new_position, "animation": animation}}}
 
