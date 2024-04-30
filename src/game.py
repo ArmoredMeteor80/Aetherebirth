@@ -1,6 +1,7 @@
 import os
 import sys
 import pygame
+from multiprocessing import Process
 
 from .networking import Network, NetworkEntityManager
 
@@ -357,4 +358,7 @@ class Game:
             # Cadence le taux de rafraîchissement de la fenêtre à 60 ips
             dt = clock.tick(60)
             
-            self.update_network(dt)
+            #self.update_network(dt)
+            p = Process(target=self.update_network, args=[dt], daemon=True).start()
+            #p.start()
+            #p.join()
