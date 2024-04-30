@@ -34,11 +34,7 @@ class Network:
             },
             "name": player.player_name,
             "stats": player.stats,
-            "actions": {
-                "is_running": player.is_running,
-                "is_exhausted": player.is_exhausted,
-                "is_attacking": player.is_attacking
-            }
+            "animation": player.animation_name
         })
 
     def getPlayers(self):

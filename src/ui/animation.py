@@ -7,6 +7,7 @@ class AnimateSprite(pygame.sprite.Sprite):
     """Classe qui anime les sprites"""
     def __init__(self, name: str):
         super().__init__()
+        self.animation_name = "still"
         self.sprite_sheet = pygame.image.load(f"assets/sprites/sprite_sheet_{name}.png",).convert_alpha()
         if name == "bob":
             # dictionnaire contenant pour chaque clé un tuple composé d'une liste d'images
@@ -109,6 +110,7 @@ class AnimateSprite(pygame.sprite.Sprite):
 
     def change_animation(self, name: str):
         """Change l'animation en fonction d'un nom d'animation"""
+        self.animation_name = name
         if name == 'attack':
             if self.attack_animation_index >= len(self.images[name][0]):
                 self.attack_animation_index = 0
@@ -157,6 +159,7 @@ class AnimateSprite(pygame.sprite.Sprite):
                 if name != 'still':
                     self.images['still'] = (self.get_images(self.images[name][1] * 32, 0, 1), 0)
                     self.images['attack'] = (self.get_images(self.images[name][1]*32 + 128, 0, 11), 0)
+        return self
 
     def get_images(self, y: int, start: int, end: int, size: int = 32):
         """Renvoie une liste d'images"""

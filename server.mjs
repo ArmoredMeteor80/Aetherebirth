@@ -21,10 +21,13 @@ const server = net.createServer((socket) => {
     socket.on("data", (data) => {
         const receivedData = JSON.parse(data);
         player.receivedData = receivedData;
+        console.log(player)
+        console.log(player.sentDataCache)
 
         const sameMapPlayers = [];
         for(const playerId of Object.keys(players)) {
-            if((player.id != players[playerId].player_number) && (players[playerId]?.receivedData?.position?.map == player?.receivedData?.position?.map)){
+            console.log(player.id,players[playerId].id)
+            if((player.id != players[playerId].id) && (players[playerId]?.receivedData?.position?.map == player?.receivedData?.position?.map)){
                 let tData = players[playerId].receivedData;
                 tData.id = playerId;
                 sameMapPlayers.push(tData);
@@ -32,10 +35,10 @@ const server = net.createServer((socket) => {
         }
 
         if(JSON.stringify(sameMapPlayers) != JSON.stringify(player.sentDataCache.players)){
-            player.sentDataCache = {id:player.player_number, players: sameMapPlayers};
+            player.sentDataCache = {id:player.id, players: sameMapPlayers};
             socket.write(JSON.stringify(player.sentDataCache));
         } else {
-            socket.write(JSON.stringify({id:player.player_number, changed: false}))
+            socket.write(JSON.stringify({id:player.id, changed: false}))
         }
     });
 
