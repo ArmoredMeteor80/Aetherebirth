@@ -25,7 +25,7 @@ class Server:
 
     # "MOVE" event handler
     def on_move(self, player_id, new_position, animation, **kwargs):
-        print(GameState.players)
+        print(self.game_state.players)
         print(f"{self.game_state.players[player_id]['name']} moved to {new_position}")
         return {"players": {player_id: {"position": new_position, "animation": animation}}}
 
